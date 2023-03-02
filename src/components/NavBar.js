@@ -11,11 +11,13 @@ import photoURL from '../profile.jpg'
 import MenuIcon from '@mui/icons-material/Menu'
 import LockIcon from '@mui/icons-material/Lock'
 import {useValue} from '../context/ContextProvider'
+import UserIcons from './user/UserIcons'
 
 const Navbar = () => {
   const user = {name: 'test', photoURL}
   const {
     state: {currentUser},
+    dispatch,
   } = useValue()
   return (
     <AppBar>
@@ -46,11 +48,15 @@ const Navbar = () => {
             YRW
           </Typography>
           {!currentUser ? (
-            <Button color='inherit' startIcon={<LockIcon />}>
+            <Button
+              color='inherit'
+              startIcon={<LockIcon />}
+              onClick={() => dispatch({type: 'UPDATE_USER', payload: user})}
+            >
               Login
             </Button>
           ) : (
-            ''
+            <UserIcons />
           )}
         </Toolbar>
       </Container>
