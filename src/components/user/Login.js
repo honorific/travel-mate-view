@@ -9,13 +9,13 @@ import {
   IconButton,
   TextField,
 } from '@mui/material'
-import React, {useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {useValue} from '../../context/ContextProvider'
 import PasswodField from './PasswodField'
 
 const Login = () => {
   const [title, setTitle] = useState('Login')
-  const [isRegister, setIsRegister] = useState(true)
+  const [isRegister, setIsRegister] = useState(false)
   const nameRef = useRef()
   const emailRef = useRef()
   const passwordRef = useRef()
@@ -32,7 +32,11 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
   }
-  console.log(openLogin)
+
+  useEffect(() => {
+    isRegister ? setTitle('Register') : setTitle('Login')
+  }, [isRegister])
+
   return (
     <Dialog open={openLogin} onClose={handleClose}>
       <DialogTitle>
@@ -52,7 +56,7 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
         <DialogContent dividers>
           <DialogContentText>Please fill you information</DialogContentText>
-          {!isRegister && (
+          {isRegister && (
             <TextField
               autoFocus
               margin='normal'
@@ -78,7 +82,7 @@ const Login = () => {
             required
           />
           <PasswodField {...{passwordRef}} />
-          {!isRegister && (
+          {isRegister && (
             <PasswodField
               {...{
                 confirmPasswordRef,
@@ -94,6 +98,14 @@ const Login = () => {
           </Button>
         </DialogActions>
       </form>
+      <DialogActions sx={{justifyContent: 'left', padding: '24px 15px'}}>
+        {isRegister
+          ? 'You already have an account? login'
+          : 'Dont you have any account? create one'}
+        <Button onClick={() => setIsRegister(!isRegister)}>
+          {isRegister ? 'Login' : 'Register'}
+        </Button>
+      </DialogActions>
     </Dialog>
   )
 }
