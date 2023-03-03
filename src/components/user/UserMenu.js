@@ -1,10 +1,8 @@
 import {Logout, Settings} from '@mui/icons-material'
 import {ListItemIcon, Menu, MenuItem} from '@mui/material'
-import {useValue} from '../context/ContextProvider'
+import {useValue} from '../../context/ContextProvider'
 
-const UserMenu = (props) => {
-  console.log(props)
-  const {anchorUserMenu, setAnchorUserMenu} = props
+const UserMenu = ({anchorUserMenu, setAnchorUserMenu}) => {
   const closeHandler = () => {
     setAnchorUserMenu(null)
   }
