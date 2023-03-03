@@ -11,6 +11,7 @@ import {
 } from '@mui/material'
 import {useEffect, useRef, useState} from 'react'
 import {useValue} from '../../context/ContextProvider'
+import GoogleOneTapLogin from './GoogleOneTapLogin'
 import PasswodField from './PasswodField'
 
 const Login = () => {
@@ -92,8 +93,13 @@ const Login = () => {
             />
           )}
         </DialogContent>
-        <DialogActions>
-          <Button type='submit' variant='contained' endIcon={<Send />}>
+        <DialogActions sx={{justifyContent: 'center'}}>
+          <Button
+            type='submit'
+            variant='contained'
+            endIcon={<Send />}
+            fullWidth
+          >
             Submit
           </Button>
         </DialogActions>
@@ -105,6 +111,9 @@ const Login = () => {
         <Button onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? 'Login' : 'Register'}
         </Button>
+      </DialogActions>
+      <DialogActions sx={{justifyContent: 'center', py: '24px'}}>
+        <GoogleOneTapLogin />
       </DialogActions>
     </Dialog>
   )
