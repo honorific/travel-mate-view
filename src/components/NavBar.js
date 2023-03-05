@@ -7,7 +7,6 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material'
-import photoURL from '../profile.jpg'
 import MenuIcon from '@mui/icons-material/Menu'
 import LockIcon from '@mui/icons-material/Lock'
 import {useValue} from '../context/ContextProvider'
@@ -15,7 +14,6 @@ import UserIcons from './user/UserIcons'
 import {Login} from '@mui/icons-material'
 
 const Navbar = () => {
-  const user = {name: 'test', photoURL}
   const {
     state: {currentUser},
     dispatch,
