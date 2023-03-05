@@ -32,6 +32,23 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    dispatch({type: 'START_LOADING'})
+
+    setTimeout(() => {
+      dispatch({type: 'END_LOADING'})
+    }, 6000)
+    const password = passwordRef.current.value
+    const confirmPassword = confirmPasswordRef.current.value
+    if (password !== confirmPassword) {
+      dispatch({
+        type: 'UPDATE_ALERT',
+        payload: {
+          open: true,
+          severity: 'error',
+          message: 'passwords dont match',
+        },
+      })
+    }
   }
 
   useEffect(() => {
@@ -86,7 +103,7 @@ const Login = () => {
           {isRegister && (
             <PasswodField
               {...{
-                confirmPasswordRef,
+                passwordRef: confirmPasswordRef,
                 label: 'Confirm password',
                 id: 'confirmPassword',
               }}

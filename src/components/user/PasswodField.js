@@ -7,14 +7,13 @@ const PasswodField = ({passwordRef, id = 'password', label = 'Password'}) => {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword)
   }
-  // for keep the focus on password field
+  // to keep the focus on password field
   const handleMouseDownPassword = (e) => {
     e.preventDefault()
   }
 
   return (
     <TextField
-      autoFocus
       margin='normal'
       variant='standard'
       id={id}
