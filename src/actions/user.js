@@ -4,7 +4,8 @@ const url = `${process.env.REACT_APP_SERVER_URL}/user`
 
 export const register = async (user, dispatch) => {
   dispatch({type: 'START_LOADING'})
-  const result = await fetchData({url: `${url}/register`, body: user, dispatch})
+  const result = await fetchData({url: `${url}/register`, body: user}, dispatch)
+  console.log('result is: ', result)
   if (result) {
     dispatch({type: 'UPDATE_USER', payload: result})
     dispatch({type: 'CLOSE_LOGIN'})
