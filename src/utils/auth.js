@@ -10,6 +10,6 @@ export const storeUserInfo = (value, payload) => {
   cookies.set(value, payload, options)
 }
 
-export const removeUserInfo = () => {
-  cookies.remove('userInfo')
+export const removeUserInfo = (value) => {
+  cookies.remove(value)
 }

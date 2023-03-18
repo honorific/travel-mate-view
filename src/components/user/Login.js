@@ -10,6 +10,7 @@ import {
   TextField,
 } from '@mui/material'
 import {useEffect, useRef, useState} from 'react'
+import {register} from '../../actions/user'
 import {useValue} from '../../context/ContextProvider'
 import GoogleOneTapLogin from './GoogleOneTapLogin'
 import PasswodField from './PasswodField'
@@ -47,7 +48,7 @@ const Login = () => {
         },
       })
     }
-    //send regsiter request
+    register({name, email, password}, dispatch)
   }
 
   useEffect(() => {
@@ -123,7 +124,7 @@ const Login = () => {
       <DialogActions sx={{justifyContent: 'left', padding: '24px 15px'}}>
         {isRegister
           ? 'You already have an account? login'
-          : 'Don\'t you have any account? create one'}
+          : "Don't you have any account? create one"}
         <Button onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? 'Login' : 'Register'}
         </Button>

@@ -13,8 +13,13 @@ const reducer = (state, action) => {
     case 'UPDATE_ALERT':
       return {...state, alert: action.payload}
     case 'UPDATE_USER':
-      storeUserInfo('currentUser', JSON.stringify(action.payload))
-      return {...state, currentUser: action.payload}
+      if (action.payload === null) {
+        removeUserInfo('currentUser')
+        return {...state, currentUser: action.payload}
+      } else {
+        storeUserInfo('currentUser', JSON.stringify(action.payload))
+        return {...state, currentUser: action.payload}
+      }
     default:
       throw new Error("you didn't pass a proper action")
   }
