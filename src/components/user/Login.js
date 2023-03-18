@@ -32,12 +32,10 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch({type: 'START_LOADING'})
-
-    setTimeout(() => {
-      dispatch({type: 'END_LOADING'})
-    }, 6000)
+    // send login request if it is not register
+    const email = emailRef.current.value
     const password = passwordRef.current.value
+    const name = nameRef.current.value
     const confirmPassword = confirmPasswordRef.current.value
     if (password !== confirmPassword) {
       dispatch({
@@ -45,10 +43,11 @@ const Login = () => {
         payload: {
           open: true,
           severity: 'error',
-          message: 'passwords dont match',
+          message: 'Passwords dont match',
         },
       })
     }
+    //send regsiter request
   }
 
   useEffect(() => {
@@ -124,7 +123,7 @@ const Login = () => {
       <DialogActions sx={{justifyContent: 'left', padding: '24px 15px'}}>
         {isRegister
           ? 'You already have an account? login'
-          : 'Dont you have any account? create one'}
+          : 'Don\'t you have any account? create one'}
         <Button onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? 'Login' : 'Register'}
         </Button>
