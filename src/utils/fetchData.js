@@ -12,8 +12,8 @@ const fetchData = async (
     if (!data.success) {
       if (response.status === 401) {
         dispatch({type: 'UPDATE_USER', payload: null})
-        throw new Error(data.message)
       }
+      throw new Error(data.message)
     }
     return data.result
   } catch (error) {
@@ -22,8 +22,8 @@ const fetchData = async (
       payload: {open: true, severity: 'error', message: error.message},
     })
     console.log(error)
+    return null
   }
-  return null
 }
 
 export default fetchData
