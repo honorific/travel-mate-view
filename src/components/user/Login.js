@@ -10,7 +10,7 @@ import {
   TextField,
 } from '@mui/material'
 import {useEffect, useRef, useState} from 'react'
-import {register} from '../../actions/user'
+import {login, register} from '../../actions/user'
 import {useValue} from '../../context/ContextProvider'
 import GoogleOneTapLogin from './GoogleOneTapLogin'
 import PasswodField from './PasswodField'
@@ -36,6 +36,9 @@ const Login = () => {
     // send login request if it is not register
     const email = emailRef.current.value
     const password = passwordRef.current.value
+    if (!isRegister) {
+      return login({email, password}, dispatch)
+    }
     const name = nameRef.current.value
     const confirmPassword = confirmPasswordRef.current.value
     if (password !== confirmPassword) {

@@ -20,3 +20,14 @@ export const register = async (user, dispatch) => {
   }
   dispatch({type: 'END_LOADING'})
 }
+
+export const login = async (user, dispatch) => {
+  dispatch({type: 'START_LOADING'})
+  const result = await fetchData({url: `${url}/login`, body: user}, dispatch)
+  console.log('result is: ', result)
+  if (result) {
+    dispatch({type: 'UPDATE_USER', payload: result})
+    dispatch({type: 'CLOSE_LOGIN'})
+  }
+  dispatch({type: 'END_LOADING'})
+}
