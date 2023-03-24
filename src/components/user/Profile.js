@@ -11,6 +11,7 @@ import {
   TextField,
 } from '@mui/material'
 import {useRef} from 'react'
+import {updateProfile} from '../../actions/user'
 import {useValue} from '../../context/ContextProvider'
 
 const Profile = () => {
@@ -27,6 +28,8 @@ const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    const name = nameRef.current.value
+    updateProfile(currentUser, {name, file: profile.file}, dispatch)
   }
 
   const handleChange = (e) => {
