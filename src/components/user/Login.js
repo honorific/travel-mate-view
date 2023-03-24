@@ -10,6 +10,7 @@ import {
   TextField,
 } from '@mui/material'
 import {useEffect, useRef, useState} from 'react'
+import {login, register} from '../../actions/user'
 import {useValue} from '../../context/ContextProvider'
 import GoogleOneTapLogin from './GoogleOneTapLogin'
 import PasswodField from './PasswodField'
@@ -32,12 +33,13 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch({type: 'START_LOADING'})
-
-    setTimeout(() => {
-      dispatch({type: 'END_LOADING'})
-    }, 6000)
+    // send login request if it is not register
+    const email = emailRef.current.value
     const password = passwordRef.current.value
+    if (!isRegister) {
+      return login({email, password}, dispatch)
+    }
+    const name = nameRef.current.value
     const confirmPassword = confirmPasswordRef.current.value
     if (password !== confirmPassword) {
       dispatch({
@@ -45,10 +47,11 @@ const Login = () => {
         payload: {
           open: true,
           severity: 'error',
-          message: 'passwords dont match',
+          message: 'Passwords dont match',
         },
       })
     }
+    register({name, email, password}, dispatch)
   }
 
   useEffect(() => {
@@ -124,7 +127,7 @@ const Login = () => {
       <DialogActions sx={{justifyContent: 'left', padding: '24px 15px'}}>
         {isRegister
           ? 'You already have an account? login'
-          : 'Dont you have any account? create one'}
+          : "Don't you have any account? create one"}
         <Button onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? 'Login' : 'Register'}
         </Button>

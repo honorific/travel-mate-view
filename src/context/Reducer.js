@@ -1,3 +1,5 @@
+import {storeUserInfo, removeUserInfo} from '../utils/auth'
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'OPEN_LOGIN':
@@ -10,9 +12,16 @@ const reducer = (state, action) => {
       return {...state, loading: false}
     case 'UPDATE_ALERT':
       return {...state, alert: action.payload}
+    case 'UPDATE_PROFILE':
+      return {...state, profile: action.payload}
     case 'UPDATE_USER':
-      localStorage.setItem('currentUser', JSON.stringify(action.payload))
-      return {...state, currentUser: action.payload}
+      if (action.payload === null) {
+        removeUserInfo('currentUser')
+        return {...state, currentUser: action.payload}
+      } else {
+        storeUserInfo('currentUser', JSON.stringify(action.payload))
+        return {...state, currentUser: action.payload}
+      }
     default:
       throw new Error("you didn't pass a proper action")
   }
