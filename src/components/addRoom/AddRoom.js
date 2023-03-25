@@ -6,8 +6,12 @@ import {
   StepButton,
   Stepper,
 } from '@mui/material'
+import {Box} from '@mui/system'
 import React from 'react'
 import {useState} from 'react'
+import AddLocation from './addLocation/AddLocation'
+import addImages from './addImages/AddImages'
+import addDetails from './addDetailes/addDetails'
 
 const AddRoom = () => {
   const [activeStep, setActiveStep] = useState(0)
@@ -49,6 +53,15 @@ const AddRoom = () => {
           )
         })}
       </Stepper>
+      <Box>
+        {
+          {
+            0: <AddLocation />,
+            1: <addDetails />,
+            2: <addImages />,
+          }[activeStep]
+        }
+      </Box>
       <Stack
         direction='row'
         sx={{pt: 2, pb: 7, justifyContent: 'space-around'}}
