@@ -57,8 +57,8 @@ const AddRoom = () => {
         {
           {
             0: <AddLocation />,
-            1: <addDetails />,
-            2: <addImages />,
+            1: <AddDetails />,
+            2: <AddImages />,
           }[activeStep]
         }
       </Box>
