@@ -11,7 +11,6 @@ import MenuIcon from '@mui/icons-material/Menu'
 import LockIcon from '@mui/icons-material/Lock'
 import {useValue} from '../context/ContextProvider'
 import UserIcons from './user/UserIcons'
-import {Login} from '@mui/icons-material'
 
 const Navbar = () => {
   const {

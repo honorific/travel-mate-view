@@ -19,8 +19,10 @@ export const useValue = () => {
 const ContextProvider = ({children}) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   useEffect(() => {
-    const currentUserFromCookie = cookies.get('currentUser')
-    dispatch({type: 'UPDATE_USER', payload: currentUserFromCookie})
+    if (document.cookie.currentUser) {
+      const currentUserFromCookie = cookies.get('currentUser')
+      dispatch({type: 'UPDATE_USER', payload: currentUserFromCookie})
+    }
   }, [])
 
   return (
