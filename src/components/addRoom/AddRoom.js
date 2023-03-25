@@ -10,8 +10,8 @@ import {Box} from '@mui/system'
 import React from 'react'
 import {useState} from 'react'
 import AddLocation from './addLocation/AddLocation'
-import addImages from './addImages/AddImages'
-import addDetails from './addDetailes/addDetails'
+import AddImages from './addImages/AddImages'
+import AddDetails from './addDetailes/AddDetails'
 
 const AddRoom = () => {
   const [activeStep, setActiveStep] = useState(0)
