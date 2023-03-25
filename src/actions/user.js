@@ -41,21 +41,28 @@ export const updateProfile = async (currentUser, updatedFields, dispatch) => {
   try {
     if (file) {
       const imageName = uuidv4() + '.' + file?.name?.split('.')?.pop()
+      console.log('filename is', imageName)
       const photoURL = await uploadFile(
         file,
         `profile/${currentUser?.id}/${imageName}`,
       )
       body = {...body, photoURL}
+      console.log('body is: ', body)
     }
-    const result = fetchData({
-      url: `${url}/updateprofile`,
-      method: 'PATCH',
-      body,
-      token: currentUser.token,
+    console.log('body outside is: ', body)
+    const result = await fetchData(
+      {
+        url: `${url}/updateprofile`,
+        method: 'PATCH',
+        body,
+        token: currentUser.token,
+      },
       dispatch,
-    })
+    )
     if (result) {
+      console.log('result is: ', result)
       dispatch({type: 'UPDATE_USER', payload: {...currentUser, ...result}})
+      console.log('currentUser is: ', currentUser)
       dispatch({
         type: 'UPDATE_ALERT',
         payload: {

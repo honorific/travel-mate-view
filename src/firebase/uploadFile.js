@@ -9,6 +9,7 @@ const uploadFile = (file, filePath) => {
       const url = await getDownloadURL(storageRef)
       resolve(url)
     } catch (error) {
+      console.log(error)
       reject(error)
     }
   })
