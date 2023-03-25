@@ -5,15 +5,20 @@ import {
   Box,
   Paper,
 } from '@mui/material'
-import {useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import ClusterMap from './map/ClusterMap'
 import Rooms from './rooms/Rooms'
 import AddRoom from './addRoom/AddRoom'
 
 const BottomNav = () => {
   const [value, setValue] = useState(0)
+  const ref = useRef()
+  useEffect(() => {
+    ref.current.ownerDocument.body.scrollTop = 0
+  }, [value])
+
   return (
-    <Box>
+    <Box ref={ref}>
       {
         {
           0: <ClusterMap />,
