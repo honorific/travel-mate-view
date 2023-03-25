@@ -18,47 +18,50 @@ const Navbar = () => {
     dispatch,
   } = useValue()
   return (
-    <AppBar>
-      <Container maxWidth='lg'>
-        <Toolbar disableGutters>
-          <Box sx={{mr: 1}}>
-            <IconButton size='large' color='inherit'>
-              <MenuIcon />
-            </IconButton>
-          </Box>
-          <Typography
-            variant='h6'
-            component='h1'
-            noWrap
-            sx={{
-              flexGrow: 1,
-              display: {xs: 'none', md: 'flex'},
-            }}
-          >
-            You are welcome
-          </Typography>
-          <Typography
-            variant='h6'
-            component='h1'
-            noWrap
-            sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}
-          >
-            YRW
-          </Typography>
-          {!currentUser ? (
-            <Button
-              color='inherit'
-              startIcon={<LockIcon />}
-              onClick={() => dispatch({type: 'OPEN_LOGIN'})}
+    <>
+      <AppBar>
+        <Container maxWidth='lg'>
+          <Toolbar disableGutters>
+            <Box sx={{mr: 1}}>
+              <IconButton size='large' color='inherit'>
+                <MenuIcon />
+              </IconButton>
+            </Box>
+            <Typography
+              variant='h6'
+              component='h1'
+              noWrap
+              sx={{
+                flexGrow: 1,
+                display: {xs: 'none', md: 'flex'},
+              }}
             >
-              Login
-            </Button>
-          ) : (
-            <UserIcons />
-          )}
-        </Toolbar>
-      </Container>
-    </AppBar>
+              You are welcome
+            </Typography>
+            <Typography
+              variant='h6'
+              component='h1'
+              noWrap
+              sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}
+            >
+              YRW
+            </Typography>
+            {!currentUser ? (
+              <Button
+                color='inherit'
+                startIcon={<LockIcon />}
+                onClick={() => dispatch({type: 'OPEN_LOGIN'})}
+              >
+                Login
+              </Button>
+            ) : (
+              <UserIcons />
+            )}
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <Toolbar />
+    </>
   )
 }
 
