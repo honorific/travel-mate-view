@@ -1,9 +1,7 @@
 import React from 'react'
 
-const addDetails = () => {
-  return (
-    <div>addDetails</div>
-  )
+const AddDetails = () => {
+  return <div>addDetails</div>
 }
 
-export default addDetails
+export default AddDetails
