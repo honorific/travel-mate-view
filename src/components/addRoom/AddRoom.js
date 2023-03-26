@@ -7,13 +7,17 @@ import {
   Stepper,
 } from '@mui/material'
 import {Box} from '@mui/system'
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useState} from 'react'
 import AddLocation from './addLocation/AddLocation'
 import AddImages from './addImages/AddImages'
 import AddDetails from './addDetailes/AddDetails'
+import {useValue} from '../../context/ContextProvider'
 
 const AddRoom = () => {
+  const {
+    state: {images},
+  } = useValue()
   const [activeStep, setActiveStep] = useState(0)
   const [steps, setSteps] = useState([
     {label: 'Location', completed: false},
@@ -40,6 +44,22 @@ const AddRoom = () => {
       setActiveStep(stepIndex)
     }
   }
+
+  useEffect(() => {
+    if (images.length) {
+      if (!steps[2].completed) setComplete(2, true)
+    } else {
+      if (steps[2].completed) setComplete(2, false)
+    }
+  }, [images])
+
+  const setComplete = (index, status) => {
+    setSteps((steps) => {
+      steps[index].completed = status
+      return [...steps]
+    })
+  }
+
   return (
     <Container sx={{my: 4}}>
       <Stepper alternativeLabel nonLinear activeStep={activeStep} sx={{mb: 3}}>

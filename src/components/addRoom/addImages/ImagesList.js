@@ -6,9 +6,18 @@ import {
   ImageListItemBar,
 } from '@mui/material'
 import {useValue} from '../../../context/ContextProvider'
+import deleteFile from '../../../firebase/deleteFile'
 
 const ImagesList = () => {
-  const handleDelete = async (image) => {}
+  const handleDelete = async (image) => {
+    dispatch({type: 'DELETE_IMAGE', payload: image})
+    const imageName = image?.split(`${currentUser?.id}%2F`)[1].split('?')[0]
+    try {
+      await deleteFile(`rooms/${currentUser?.id}/${imageName}`)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const {
     state: {images, currentUser},
     dispatch,

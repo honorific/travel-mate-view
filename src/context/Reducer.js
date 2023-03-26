@@ -24,6 +24,11 @@ const reducer = (state, action) => {
       }
     case 'UPDATE_IMAGES':
       return {...state, images: [...state.images, action.payload]}
+    case 'DELETE_IMAGE':
+      return {
+        ...state,
+        images: state.images.filter((image) => image !== action.payload),
+      }
     default:
       throw new Error("you didn't pass a proper action")
   }
