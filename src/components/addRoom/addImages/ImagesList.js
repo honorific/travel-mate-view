@@ -7,6 +7,7 @@ import {
 } from '@mui/material'
 import {useValue} from '../../../context/ContextProvider'
 import deleteFile from '../../../firebase/deleteFile'
+import {v4 as uuidv4} from 'uuid'
 
 const ImagesList = () => {
   const handleDelete = async (image) => {
@@ -18,10 +19,12 @@ const ImagesList = () => {
       console.log(error)
     }
   }
+
   const {
     state: {images, currentUser},
     dispatch,
   } = useValue()
+
   return (
     <ImageList
       rowHeight={200}
@@ -35,7 +38,7 @@ const ImagesList = () => {
     >
       {images.map((image, index) => {
         return (
-          <ImageListItem key={index} cols={1} rows={1}>
+          <ImageListItem key={uuidv4()} cols={1} rows={1}>
             <img src={image} loading='lazy' style={{height: '100%'}} />
             <ImageListItemBar
               position='top'

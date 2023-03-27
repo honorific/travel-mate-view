@@ -17,6 +17,8 @@ const AddImages = () => {
     accept: {'image/*': []},
   })
 
+  console.log('files are: ', files)
+
   return (
     <>
       <Paper

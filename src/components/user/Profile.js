@@ -35,7 +35,9 @@ const Profile = () => {
   const handleChange = (e) => {
     const file = e.target.files[0]
     if (file) {
+      console.log('file is: ', file)
       const photoURL = URL.createObjectURL(file)
+      console.log('URL object is: ', photoURL)
       dispatch({type: 'UPDATE_PROFILE', payload: {...profile, file, photoURL}})
     }
   }
