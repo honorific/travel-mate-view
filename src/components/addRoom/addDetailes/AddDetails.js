@@ -7,14 +7,14 @@ import {
   Stack,
   TextField,
 } from '@mui/material'
-import {maxWidth} from '@mui/system'
 import {useState} from 'react'
 import {useValue} from '../../../context/ContextProvider'
+import InfoField from './InfoField'
 
 const AddDetails = () => {
   const {
     state: {
-      details: {title, descruption, price},
+      details: {title, description, price},
     },
     dispatch,
   } = useValue()
@@ -38,7 +38,7 @@ const AddDetails = () => {
     <Stack
       sx={{
         alignItems: 'center',
-        '&.MuiTextField-root': {width: '100%', maxWidth: 500, m: 1},
+        '& .MuiTextField-root': {width: '100%', maxWidth: 500, m: 1},
       }}
     >
       <FormControl>
@@ -67,6 +67,19 @@ const AddDetails = () => {
           )}
         </RadioGroup>
       </FormControl>
+      <InfoField
+        mainProps={{name: 'title', label: 'Title', value: title}}
+        minLength={5}
+      />
+      <InfoField
+        mainProps={{
+          name: 'description',
+          label: 'Description',
+          value: description,
+        }}
+        minLength={10}
+        optionalProps={{multiline: true, rows: 4}}
+      />
     </Stack>
   )
 }
