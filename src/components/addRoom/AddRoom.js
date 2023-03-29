@@ -16,7 +16,7 @@ import {useValue} from '../../context/ContextProvider'
 
 const AddRoom = () => {
   const {
-    state: {images, details},
+    state: {images, details, location},
   } = useValue()
   const [activeStep, setActiveStep] = useState(0)
   const [steps, setSteps] = useState([
@@ -60,6 +60,14 @@ const AddRoom = () => {
       if (steps[1].completed) setComplete(1, false)
     }
   }, [details])
+
+  useEffect(() => {
+    if (location.lng || location.lat) {
+      if (!steps[0].completed) setComplete(0, true)
+    } else {
+      if (steps[0].completed) setComplete(0, false)
+    }
+  }, [location])
 
   const setComplete = (index, status) => {
     setSteps((steps) => {
