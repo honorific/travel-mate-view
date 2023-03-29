@@ -7,6 +7,8 @@ import ReactMapGL, {
 import 'mapbox-gl/dist/mapbox-gl.css'
 import {useValue} from '../../../context/ContextProvider'
 import {useEffect, useRef} from 'react'
+import Geocoder from './Geocoder'
+
 const AddLocation = () => {
   const {
     state: {
@@ -14,6 +16,7 @@ const AddLocation = () => {
     },
     dispatch,
   } = useValue()
+
   const mapref = useRef()
 
   useEffect(() => {
@@ -61,13 +64,15 @@ const AddLocation = () => {
         <GeolocateControl
           position='top-left'
           trackUserLocation
-          onGeolocate={(e) =>
+          onGeolocate={(e) => {
+            console.log("geo locate e: ",e)
             dispatch({
               type: 'UPDATE_LOCATION',
               payload: {lng: e.coords.longitude, lat: e.coords.latitude},
             })
-          }
+          }}
         />
+        <Geocoder />
       </ReactMapGL>
     </Box>
   )
