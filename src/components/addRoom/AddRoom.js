@@ -14,10 +14,12 @@ import AddImages from './addImages/AddImages'
 import AddDetails from './addDetailes/AddDetails'
 import {useValue} from '../../context/ContextProvider'
 import {Send} from '@mui/icons-material'
+import {createRoom} from '../../actions/room'
 
-const AddRoom = () => {
+const AddRoom = ({setPage}) => {
   const {
-    state: {images, details, location},
+    state: {images, details, location, currentUser},
+    dispatch,
   } = useValue()
 
   const [showSubmit, setShowSubmit] = useState(false)
@@ -28,7 +30,17 @@ const AddRoom = () => {
     {label: 'images', completed: false},
   ])
 
-  const handleSubmit = () => {}
+  const handleSubmit = () => {
+    const room = {
+      lng: location.lng,
+      lat: location.lat,
+      price: details.price,
+      title: details.title,
+      description: details.description,
+      images,
+    }
+    createRoom(room, currentUser, dispatch, setPage)
+  }
 
   const checkDisabled = () => {
     if (activeStep < steps.length - 1) return false

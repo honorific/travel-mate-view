@@ -2,19 +2,17 @@ import {useValue} from '../context/ContextProvider'
 import fetchData from '../utils/fetchData'
 
 const url = `${process.env.REACT_APP_SERVER_URL}/room`
-const {
-  state: {currentUser},
-  dispatch,
-} = useValue()
 
-export const createRoom = async (room, currentUser, dispatch) => {
+export const createRoom = async (room, currentUser, dispatch, setPage) => {
   dispatch({type: 'START_LOADING'})
-  const result = await fetchData({
-    url,
-    body: room,
-    token: currentUser?.token,
+  const result = await fetchData(
+    {
+      url,
+      body: room,
+      token: currentUser?.token,
+    },
     dispatch,
-  })
+  )
   if (result) {
     dispatch({
       type: 'UPDATE_ALERT',
@@ -24,6 +22,8 @@ export const createRoom = async (room, currentUser, dispatch) => {
         message: 'the room created successfully',
       },
     })
+    dispatch({type: 'RESET_ROOM'})
+    setPage(0)
   }
   dispatch({type: 'END_LOADING'})
 }
