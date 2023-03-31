@@ -1,4 +1,3 @@
-import {DetailsOutlined} from '@mui/icons-material'
 import {storeUserInfo, removeUserInfo} from '../utils/auth'
 
 const reducer = (state, action) => {
@@ -52,6 +51,9 @@ const reducer = (state, action) => {
         details: {title: '', description: '', price: 0},
         location: {lng: 0, lat: 0},
       }
+
+    case 'UPDATE_ROOMS':
+      return {...state, rooms: action.payload}
 
     default:
       throw new Error("you didn't pass a proper action")
