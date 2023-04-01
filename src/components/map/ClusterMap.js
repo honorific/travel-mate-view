@@ -10,7 +10,7 @@ import './cluster.css'
 
 const ClusterMap = () => {
   const {
-    state: {rooms},
+    state: {currentUser, rooms},
     dispatch,
     mapRef,
   } = useValue()
@@ -28,6 +28,7 @@ const ClusterMap = () => {
   useEffect(() => {
     getRooms(dispatch)
     console.log('rooms are', rooms)
+    console.log('current user is : ', currentUser)
   }, [])
 
   useEffect(() => {
@@ -53,10 +54,10 @@ const ClusterMap = () => {
     setPoints(points)
   }, [rooms])
 
-  useEffect(() => {
-    superCluster.load(points)
-    setClusters(superCluster.getClusters(bounds, zoom))
-  }, [points, zoom, bounds])
+  // useEffect(() => {
+  //   superCluster.load(points)
+  //   setClusters(superCluster.getClusters(bounds, zoom))
+  // }, [points, zoom, bounds])
 
   // useEffect(() => {
   //   if (mapRef.current) {
@@ -80,13 +81,13 @@ const ClusterMap = () => {
           const {cluster: isCluster, point_count} = cluster.properties
           const {longitude, latitude} = cluster.geometry.coordinates
           if (isCluster) {
-            return (
-              <Marker
+            return {
+              /* <Marker
                 key={`cluster${cluster.id}`}
                 longitude={longitude}
                 latitude={latitude}
-              >
-                {/* <div
+              > 
+                 <div
                   className='cluster-marker'
                   style={{
                     width: `${10 + (point_count / points.length) * 20}px`,
@@ -105,9 +106,9 @@ const ClusterMap = () => {
                   }}
                 >
                   {point_count}
-                </div> */}
-              </Marker>
-            )
+                </div> 
+              </Marker>*/
+            }
           }
           return (
             <Marker
