@@ -10,7 +10,7 @@ import './cluster.css'
 
 const ClusterMap = () => {
   const {
-    state: {rooms},
+    state: {currentUser, rooms},
     dispatch,
     mapRef,
   } = useValue()
@@ -28,6 +28,7 @@ const ClusterMap = () => {
   useEffect(() => {
     getRooms(dispatch)
     console.log('rooms are', rooms)
+    console.log('current user is : ', currentUser)
   }, [])
 
   useEffect(() => {
@@ -46,26 +47,33 @@ const ClusterMap = () => {
         uName: room.uName,
       },
       geometry: {
-        type: 'point',
+        type: 'Point',
         coordinates: [parseFloat(room.lng), parseFloat(room.lat)],
       },
     }))
     setPoints(points)
+    console.log('points are: ', points)
   }, [rooms])
 
   useEffect(() => {
     superCluster.load(points)
-    setClusters(superCluster.getClusters(bounds, zoom))
+    console.log('bounds before is: ', bounds)
+    setClusters(superCluster.getClusters(bounds, 5))
   }, [points, zoom, bounds])
 
-  // useEffect(() => {
-  //   if (mapRef.current) {
-  //     setBounds(mapRef.current.getMap().getBounds().toArray().flat())
-  //   }
-  // }, [mapRef?.current])
+  console.log('clusters are: ', clusters)
+
+  //[points, zoom, bounds]
+
+  useEffect(() => {
+    if (mapRef.current) {
+      setBounds(mapRef.current.getMap().getBounds().toArray().flat())
+      console.log('bounds are: ', bounds)
+    }
+  }, [mapRef?.current])
 
   return (
-    <Box sx={{position: 'relative', height: '100vh'}}>
+    <Box sx={{position: 'relative', height: '90vh', width: '100%'}}>
       <ReactMapGL
         mapboxAccessToken={process.env.REACT_APP_MAP_TOKEN}
         initialViewState={{
@@ -76,9 +84,9 @@ const ClusterMap = () => {
         mapStyle='mapbox://styles/mapbox/streets-v11'
         onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
       >
-        {clusters.map((cluster) => {
+        {clusters?.map((cluster) => {
           const {cluster: isCluster, point_count} = cluster.properties
-          const {longitude, latitude} = cluster.geometry.coordinates
+          const [longitude, latitude] = cluster.geometry.coordinates
           if (isCluster) {
             return (
               <Marker
@@ -86,7 +94,7 @@ const ClusterMap = () => {
                 longitude={longitude}
                 latitude={latitude}
               >
-                {/* <div
+                <div
                   className='cluster-marker'
                   style={{
                     width: `${10 + (point_count / points.length) * 20}px`,
@@ -105,25 +113,27 @@ const ClusterMap = () => {
                   }}
                 >
                   {point_count}
-                </div> */}
+                </div>
               </Marker>
             )
           }
-          return (
-            <Marker
-              key={`room${cluster.properties.roomId}`}
-              longitude={longitude}
-              latitude={latitude}
-            >
-              <Tooltip title={cluster.properties.uName}>
-                <Avatar
-                  src={cluster.properties.uPhoto}
-                  component={Paper}
-                  elevation={2}
-                ></Avatar>
-              </Tooltip>
-            </Marker>
-          )
+          {
+            return (
+              <Marker
+                key={`room${cluster.properties.roomId}`}
+                longitude={longitude}
+                latitude={latitude}
+              >
+                <Tooltip title={cluster.properties.uName}>
+                  <Avatar
+                    src={cluster.properties.uPhoto}
+                    component={Paper}
+                    elevation={2}
+                  ></Avatar>
+                </Tooltip>
+              </Marker>
+            )
+          }
         })}
       </ReactMapGL>
     </Box>

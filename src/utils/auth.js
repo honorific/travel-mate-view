@@ -13,3 +13,7 @@ export const storeUserInfo = (value, payload) => {
 export const removeUserInfo = (value) => {
   cookies.remove(value)
 }
+
+export const getUserInfo = (cookieName) => {
+  return cookies.get(cookieName)
+}
