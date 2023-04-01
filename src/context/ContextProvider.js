@@ -1,6 +1,7 @@
 import {createContext, useContext, useEffect, useReducer} from 'react'
 import reducer from './Reducer'
 import cookies from '../utils/cookieUtil'
+import {useRef} from 'react'
 
 const initialState = {
   currentUser: null,
@@ -22,15 +23,18 @@ export const useValue = () => {
 
 const ContextProvider = ({children}) => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const mapRef = useRef()
   useEffect(() => {
-    if (document.cookie.currentUser) {
+    //if (document.cookie.currentUser) {
       const currentUserFromCookie = cookies.get('currentUser')
       dispatch({type: 'UPDATE_USER', payload: currentUserFromCookie})
-    }
+    //}
   }, [])
 
   return (
-    <Context.Provider value={{state, dispatch}}>{children}</Context.Provider>
+    <Context.Provider value={{state, dispatch, mapRef}}>
+      {children}
+    </Context.Provider>
   )
 }
 
