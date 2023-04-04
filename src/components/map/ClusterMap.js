@@ -58,7 +58,7 @@ const ClusterMap = () => {
   useEffect(() => {
     superCluster.load(points)
     console.log('bounds before is: ', bounds)
-    setClusters(superCluster.getClusters(bounds, 5))
+    setClusters(superCluster.getClusters(bounds, zoom))
   }, [points, zoom, bounds])
 
   console.log('clusters are: ', clusters)
