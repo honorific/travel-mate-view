@@ -11,19 +11,28 @@ import MenuIcon from '@mui/icons-material/Menu'
 import LockIcon from '@mui/icons-material/Lock'
 import {useValue} from '../context/ContextProvider'
 import UserIcons from './user/UserIcons'
+import Sidebar from './sidebar/Sidebar'
+import {useState} from 'react'
 
 const Navbar = () => {
   const {
     state: {currentUser},
     dispatch,
   } = useValue()
+
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
     <>
       <AppBar>
         <Container maxWidth='lg'>
           <Toolbar disableGutters>
             <Box sx={{mr: 1}}>
-              <IconButton size='large' color='inherit'>
+              <IconButton
+                size='large'
+                color='inherit'
+                onClick={() => setIsOpen(true)}
+              >
                 <MenuIcon />
               </IconButton>
             </Box>
@@ -61,6 +70,7 @@ const Navbar = () => {
         </Container>
       </AppBar>
       <Toolbar />
+      <Sidebar {...{isOpen, setIsOpen}} />
     </>
   )
 }
