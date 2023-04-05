@@ -58,6 +58,12 @@ const reducer = (state, action) => {
     case 'FILTER_PRICE':
       return {...state, priceFilter: action.payload}
 
+    case 'FILTER_ADDRESS':
+      return {...state, addressFilter: action.payload}
+
+    case 'CLEAR_ADDRESS':
+      return {...state, addressFilter: null, priceFilter: 50}
+
     default:
       throw new Error("you didn't pass a proper action")
   }

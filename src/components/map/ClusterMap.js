@@ -7,6 +7,7 @@ import {Box, Tooltip, Avatar, Paper} from '@mui/material'
 import supercluster from 'supercluster'
 import {useState} from 'react'
 import './cluster.css'
+import GeocoderInput from '../sidebar/GeocoderInput'
 
 const ClusterMap = () => {
   const {
@@ -135,6 +136,7 @@ const ClusterMap = () => {
             )
           }
         })}
+        <GeocoderInput />
       </ReactMapGL>
     </Box>
   )
