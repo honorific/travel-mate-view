@@ -55,6 +55,9 @@ const reducer = (state, action) => {
     case 'UPDATE_ROOMS':
       return {...state, rooms: action.payload}
 
+    case 'FILTER_PRICE':
+      return {...state, priceFilter: action.payload}
+
     default:
       throw new Error("you didn't pass a proper action")
   }

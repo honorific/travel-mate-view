@@ -12,7 +12,7 @@ const DrawerHeader = styled('div')(({theme}) => ({
 
 const sidebar = ({isOpen, setIsOpen}) => {
   return (
-    <Drawer variant='persistent' hideBackdrop={true} open={isOpen}>
+    <Drawer variant='persistent' hideBackdrop={false} open={isOpen}>
       <DrawerHeader>
         <Typography>Apply search or filter</Typography>
         <IconButton onClick={() => setIsOpen(false)}>

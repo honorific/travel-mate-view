@@ -14,6 +14,7 @@ const initialState = {
   details: {title: '', description: '', price: 0},
   location: {lng: 0, lat: 0},
   rooms: [],
+  priceFilter: 50,
 }
 
 const Context = createContext(initialState)
