@@ -7,10 +7,11 @@ import {Box, Tooltip, Avatar, Paper} from '@mui/material'
 import supercluster from 'supercluster'
 import {useState} from 'react'
 import './cluster.css'
+import GeocoderInput from '../sidebar/GeocoderInput'
 
 const ClusterMap = () => {
   const {
-    state: {currentUser, rooms},
+    state: {currentUser, filteredRooms},
     dispatch,
     mapRef,
   } = useValue()
@@ -27,12 +28,12 @@ const ClusterMap = () => {
 
   useEffect(() => {
     getRooms(dispatch)
-    console.log('rooms are', rooms)
+    console.log('filteredRooms are', filteredRooms)
     console.log('current user is : ', currentUser)
   }, [])
 
   useEffect(() => {
-    const points = rooms.map((room) => ({
+    const points = filteredRooms.map((room) => ({
       type: 'Feature',
       properties: {
         cluster: false,
@@ -53,7 +54,7 @@ const ClusterMap = () => {
     }))
     setPoints(points)
     console.log('points are: ', points)
-  }, [rooms])
+  }, [filteredRooms])
 
   useEffect(() => {
     superCluster.load(points)
@@ -135,6 +136,7 @@ const ClusterMap = () => {
             )
           }
         })}
+        <GeocoderInput />
       </ReactMapGL>
     </Box>
   )
