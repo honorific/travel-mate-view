@@ -1,6 +1,5 @@
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
-import {CurrencyYenTwoTone} from '@mui/icons-material'
-import React, {useEffect} from 'react'
+import {useEffect} from 'react'
 import {useValue} from '../../context/ContextProvider'
 
 const ctrl = new MapboxGeocoder({
