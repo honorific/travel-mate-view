@@ -2,6 +2,7 @@ import {ChevronLeft} from '@mui/icons-material'
 import {Box, Drawer, IconButton, styled, Typography} from '@mui/material'
 import React from 'react'
 import {useValue} from '../../context/ContextProvider'
+import GeocoderInput from './GeocoderInput'
 import PriceSlider from './PriceSlider'
 
 const DrawerHeader = styled('div')(({theme}) => ({
@@ -14,6 +15,7 @@ const DrawerHeader = styled('div')(({theme}) => ({
 
 const Sidebar = ({isOpen, setIsOpen}) => {
   const {containerRef} = useValue()
+  console.log('containerRef is: ', containerRef)
   return (
     <Drawer variant='persistent' hideBackdrop={false} open={isOpen}>
       <DrawerHeader>
@@ -24,6 +26,7 @@ const Sidebar = ({isOpen, setIsOpen}) => {
       </DrawerHeader>
       <Box sx={{width: '240px', p: 3}}>
         <Box ref={containerRef}></Box>
+        {/* <GeocoderInput /> */}
         <PriceSlider />
       </Box>
     </Drawer>

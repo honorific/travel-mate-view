@@ -16,6 +16,7 @@ const GeocoderInput = () => {
     containerRef.current.appendChild(ctrl.onAdd(mapRef.current.getMap()))
 
     ctrl.on('result', (e) => {
+      console.log('e of onResult: ', e)
       const coords = e.result.geometry.coordinates
       dispatch({
         type: 'FILTER_ADDRESS',
@@ -23,7 +24,14 @@ const GeocoderInput = () => {
       })
     })
 
-    ctrl.on('clear', () => dispatch({type: 'CLEAR_ADDRESS'}))
+    ctrl.on('clear', (e) => {
+      console.log('e of onClear: ', e)
+      dispatch({type: 'CLEAR_ADDRESS'})
+      console.log('important mapref: ', mapRef.current)
+      const center = mapRef.current.getCenter()
+      console.log('the center is: ', center)
+      mapRef.current.flyTo({center: center, zoom: 0})
+    })
   }, [])
 
   return null
