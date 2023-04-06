@@ -91,6 +91,9 @@ const reducer = (state, action) => {
         filteredRooms: state.rooms,
       }
 
+    case 'UPDATE_ROOM':
+      return {...state, room: action.payload}
+
     default:
       throw new Error("you didn't pass a proper action")
   }
