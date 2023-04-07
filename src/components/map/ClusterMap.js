@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useMemo} from 'react'
 import {getRooms} from '../../actions/room'
 import {useValue} from '../../context/ContextProvider'
 import ReactMapGL, {Marker, Popup} from 'react-map-gl'
@@ -60,13 +60,16 @@ const ClusterMap = () => {
   useEffect(() => {
     superCluster.load(points)
     setClusters(superCluster.getClusters(bounds, zoom))
-    console.log('cluster tiles: ', superCluster.getTile(1, 1, 1))
     if (theClusterZoom) {
       setIzZoom(
         Math.min(superCluster.getClusterExpansionZoom(theClusterZoom), 10),
       )
     }
   }, [points, zoom, bounds, theClusterZoom])
+
+  useEffect(() => {
+    console.log('popup info is:', popupInfo)
+  }, [popupInfo])
 
   useEffect(() => {
     if (mapRef.current) {
@@ -143,7 +146,7 @@ const ClusterMap = () => {
             maxWidth='auto'
             closeOnClick={false}
             focusAfterOpen={false}
-            onClose={setPopupInfo(null)}
+            onClose={() => setPopupInfo(null)}
           >
             <PopupRoom {...{popupInfo}} />
           </Popup>
