@@ -102,7 +102,7 @@ const Room = () => {
                 {room?.price === 0 ? 'Free stay' : '$' + room?.price}
               </Typography>
             </Box>
-            <Box>
+            <Box sx={{display: 'flex', alignItems: 'center'}}>
               <Typography variant='h6' component='span'>
                 {'Rating: '}
               </Typography>
