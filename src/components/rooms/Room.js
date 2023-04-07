@@ -1,15 +1,20 @@
 import {
   AppBar,
+  Avatar,
+  Box,
   Container,
   Dialog,
   IconButton,
+  Rating,
   Slide,
+  Stack,
   Toolbar,
+  Tooltip,
   Typography,
 } from '@mui/material'
 import React, {forwardRef} from 'react'
 import {useValue} from '../../context/ContextProvider'
-import {Close} from '@mui/icons-material'
+import {Close, StarBorder} from '@mui/icons-material'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import {Navigation, Autoplay, EffectCoverflow, Lazy, Zoom} from 'swiper'
 import 'swiper/css'
@@ -18,6 +23,8 @@ import 'swiper/css/zoom'
 //import 'swiper/css/lazy'
 import 'swiper/css/effect-coverflow'
 import './swiper.css'
+import {useState} from 'react'
+import {useEffect} from 'react'
 
 const Transition = forwardRef((props, ref) => {
   return <Slide direction='up' {...props} ref={ref} />
@@ -28,6 +35,20 @@ const Room = () => {
     state: {room},
     dispatch,
   } = useValue()
+
+  const [place, setPlace] = useState(null)
+
+  useEffect(() => {
+    if (room) {
+      const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${room.lng},${room.lat}.json?access_token=${process.env.REACT_APP_MAP_TOKEN}`
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('placeData is: ', data)
+          setPlace(data.features[0])
+        })
+    }
+  }, [room])
 
   const handleClose = () => {
     dispatch({type: 'UPDATE_ROOM', payload: null})
@@ -77,7 +98,68 @@ const Room = () => {
               </div>
             </SwiperSlide>
           ))}
+          <Tooltip
+            title={room?.uName || ''}
+            sx={{position: 'absolute', bottom: '8px', left: '8px', zIndex: 2}}
+          >
+            <Avatar src={room?.uPhoto} />
+          </Tooltip>
         </Swiper>
+        <Stack sx={{p: 3}} spacing={2}>
+          <Stack
+            direction='row'
+            sx={{justifyContent: 'space-between', flexWrap: 'wrap'}}
+          >
+            <Box>
+              <Typography variant='h6' component='span'>
+                Price per night:{' '}
+              </Typography>
+              <Typography variant='h6' component='span'>
+                {room?.price === 0 ? 'Free stay' : '$' + room?.price}
+              </Typography>
+            </Box>
+            <Box sx={{display: 'flex', alignItems: 'center'}}>
+              <Typography variant='h6' component='span'>
+                {'Rating: '}
+              </Typography>
+              <Rating
+                name='room-ratings'
+                defaultValue={3.5}
+                precision={0.5}
+                emptyIcon={<StarBorder />}
+              />
+            </Box>
+          </Stack>
+          <Stack
+            direction='row'
+            sx={{justifyContent: 'space-between', flexWrap: 'wrap'}}
+          >
+            <Box>
+              <Typography variant='h6' component='span'>
+                {'Place name: '}
+              </Typography>
+              <Typography component='span'>{place?.text}</Typography>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Typography variant='h6' component='span'>
+                Address:&nbsp;
+              </Typography>
+              <Typography component='span'>{place?.place_name}</Typography>
+            </Box>
+          </Stack>
+          <Stack>
+            <Typography variant='h6' component='span'>
+              {'Details: '}
+            </Typography>
+            <Typography component='span'>{room?.description}</Typography>
+          </Stack>
+        </Stack>
       </Container>
     </Dialog>
   )
