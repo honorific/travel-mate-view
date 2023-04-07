@@ -5,6 +5,7 @@ import {
   Container,
   Dialog,
   IconButton,
+  Rating,
   Slide,
   Stack,
   Toolbar,
@@ -13,7 +14,7 @@ import {
 } from '@mui/material'
 import React, {forwardRef} from 'react'
 import {useValue} from '../../context/ContextProvider'
-import {Close} from '@mui/icons-material'
+import {Close, StarBorder} from '@mui/icons-material'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import {Navigation, Autoplay, EffectCoverflow, Lazy, Zoom} from 'swiper'
 import 'swiper/css'
@@ -100,6 +101,17 @@ const Room = () => {
               <Typography variant='h6' component='span'>
                 {room?.price === 0 ? 'Free stay' : '$' + room?.price}
               </Typography>
+            </Box>
+            <Box>
+              <Typography variant='h6' component='span'>
+                {'Rating: '}
+              </Typography>
+              <Rating
+                name='room-ratings'
+                defaultValue={3.5}
+                precision={0.5}
+                emptyIcon={<StarBorder />}
+              />
             </Box>
           </Stack>
         </Stack>
