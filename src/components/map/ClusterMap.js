@@ -22,6 +22,8 @@ const ClusterMap = () => {
   const [bounds, setBounds] = useState([-180, -85, 180, 85])
   const [zoom, setZoom] = useState(0)
   const [popupInfo, setPopupInfo] = useState(null)
+  const [theClusterZoom, setTheClusterZoom] = useState(null)
+  const [izZoom, setIzZoom] = useState(null)
 
   const superCluster = new supercluster({
     radius: 75,
@@ -30,8 +32,6 @@ const ClusterMap = () => {
 
   useEffect(() => {
     getRooms(dispatch)
-    // console.log('filteredRooms are', filteredRooms)
-    // console.log('current user is : ', currentUser)
   }, [])
 
   useEffect(() => {
@@ -55,23 +55,22 @@ const ClusterMap = () => {
       },
     }))
     setPoints(points)
-    // console.log('points are: ', points)
   }, [filteredRooms])
 
   useEffect(() => {
     superCluster.load(points)
-    //console.log('bounds before is: ', bounds)
     setClusters(superCluster.getClusters(bounds, zoom))
-  }, [points, zoom, bounds])
-
-  //console.log('clusters are: ', clusters)
-
-  //[points, zoom, bounds]
+    console.log('cluster tiles: ', superCluster.getTile(1, 1, 1))
+    if (theClusterZoom) {
+      setIzZoom(
+        Math.min(superCluster.getClusterExpansionZoom(theClusterZoom), 10),
+      )
+    }
+  }, [points, zoom, bounds, theClusterZoom])
 
   useEffect(() => {
     if (mapRef.current) {
       setBounds(mapRef.current.getMap().getBounds().toArray().flat())
-      //console.log('bounds are: ', bounds)
     }
   }, [mapRef?.current])
 
@@ -104,13 +103,10 @@ const ClusterMap = () => {
                     height: `${10 + (point_count / points.length) * 20}px`,
                   }}
                   onClick={() => {
-                    const zoom = Math.min(
-                      superCluster.getClusterExpansionZoom(cluster.id),
-                      zoom,
-                    )
+                    setTheClusterZoom(cluster.id)
                     mapRef.current.flyTo({
                       center: [longitude, latitude],
-                      zoom,
+                      zoom: izZoom,
                       speed: 1,
                     })
                   }}
