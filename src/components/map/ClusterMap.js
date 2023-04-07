@@ -68,10 +68,6 @@ const ClusterMap = () => {
   }, [points, zoom, bounds, theClusterZoom])
 
   useEffect(() => {
-    console.log('popup info is:', popupInfo)
-  }, [popupInfo])
-
-  useEffect(() => {
     if (mapRef.current) {
       setBounds(mapRef.current.getMap().getBounds().toArray().flat())
     }
@@ -138,6 +134,7 @@ const ClusterMap = () => {
             )
           }
         })}
+        {console.log('popupinfo in here: ', popupInfo)}
         <GeocoderInput />
         {popupInfo && (
           <Popup
