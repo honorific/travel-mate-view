@@ -1,10 +1,12 @@
 import {
   AppBar,
+  Avatar,
   Container,
   Dialog,
   IconButton,
   Slide,
   Toolbar,
+  Tooltip,
   Typography,
 } from '@mui/material'
 import React, {forwardRef} from 'react'
@@ -77,6 +79,12 @@ const Room = () => {
               </div>
             </SwiperSlide>
           ))}
+          <Tooltip
+            title={room?.uName || ''}
+            sx={{position: 'absolute', bottom: '8px', left: '8px', zIndex: 2}}
+          >
+            <Avatar src={room?.uPhoto} />
+          </Tooltip>
         </Swiper>
       </Container>
     </Dialog>
