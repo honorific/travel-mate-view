@@ -138,18 +138,26 @@ const Room = () => {
               <Typography variant='h6' component='span'>
                 {'Place name: '}
               </Typography>
-              <Typography variant='h6' component='span'>
-                {place?.text}
-              </Typography>
+              <Typography component='span'>{place?.text}</Typography>
             </Box>
-            <Box sx={{display: 'flex', alignItems: 'center'}}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
               <Typography variant='h6' component='span'>
-                {'Address: '}
+                Address:&nbsp;
               </Typography>
-              <Typography variant='h6' component='span'>
-                {place?.place_name}
-              </Typography>
+              <Typography component='span'>{place?.place_name}</Typography>
             </Box>
+          </Stack>
+          <Stack>
+            <Typography variant='h6' component='span'>
+              {'Details: '}
+            </Typography>
+            <Typography component='span'>{room?.description}</Typography>
           </Stack>
         </Stack>
       </Container>
