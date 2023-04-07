@@ -1,10 +1,12 @@
 import {
   AppBar,
   Avatar,
+  Box,
   Container,
   Dialog,
   IconButton,
   Slide,
+  Stack,
   Toolbar,
   Tooltip,
   Typography,
@@ -86,6 +88,21 @@ const Room = () => {
             <Avatar src={room?.uPhoto} />
           </Tooltip>
         </Swiper>
+        <Stack sx={{p: 3}} spacing={2}>
+          <Stack
+            direction='row'
+            sx={{justifyContent: 'space-between', flexWrap: 'wrap'}}
+          >
+            <Box>
+              <Typography variant='h6' component='span'>
+                Price per night:{' '}
+              </Typography>
+              <Typography variant='h6' component='span'>
+                {room?.price === 0 ? 'Free stay' : '$' + room?.price}
+              </Typography>
+            </Box>
+          </Stack>
+        </Stack>
       </Container>
     </Dialog>
   )
