@@ -23,6 +23,8 @@ import 'swiper/css/zoom'
 //import 'swiper/css/lazy'
 import 'swiper/css/effect-coverflow'
 import './swiper.css'
+import {useState} from 'react'
+import {useEffect} from 'react'
 
 const Transition = forwardRef((props, ref) => {
   return <Slide direction='up' {...props} ref={ref} />
@@ -33,6 +35,20 @@ const Room = () => {
     state: {room},
     dispatch,
   } = useValue()
+
+  const [place, setPlace] = useState(null)
+
+  useEffect(() => {
+    if (room) {
+      const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${room.lng},${room.lat}.json?access_token=${process.env.REACT_APP_MAP_TOKEN}`
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('placeData is: ', data)
+          setPlace(data.features[0])
+        })
+    }
+  }, [room])
 
   const handleClose = () => {
     dispatch({type: 'UPDATE_ROOM', payload: null})
@@ -112,6 +128,27 @@ const Room = () => {
                 precision={0.5}
                 emptyIcon={<StarBorder />}
               />
+            </Box>
+          </Stack>
+          <Stack
+            direction='row'
+            sx={{justifyContent: 'space-between', flexWrap: 'wrap'}}
+          >
+            <Box>
+              <Typography variant='h6' component='span'>
+                {'Place name: '}
+              </Typography>
+              <Typography variant='h6' component='span'>
+                {place?.text}
+              </Typography>
+            </Box>
+            <Box sx={{display: 'flex', alignItems: 'center'}}>
+              <Typography variant='h6' component='span'>
+                {'Address: '}
+              </Typography>
+              <Typography variant='h6' component='span'>
+                {place?.place_name}
+              </Typography>
             </Box>
           </Stack>
         </Stack>
