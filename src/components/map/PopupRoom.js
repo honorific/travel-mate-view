@@ -7,6 +7,7 @@ import 'swiper/css/pagination'
 
 const PopupRoom = ({popupInfo}) => {
   const {title, description, price, images} = popupInfo
+  console.log('title is :', title)
   const {dispatch} = useValue()
   return (
     <Card sx={{maxWidth: 400}}>
@@ -22,16 +23,16 @@ const PopupRoom = ({popupInfo}) => {
         />
         <ImageListItemBar
           title={title}
+          position='bottom'
           subtitle={description.substr(0, 30) + '...'}
-          zIndex={2}
+          sx={{zIndex: 2}}
         />
         <Swiper
           modules={[Pagination, Autoplay]}
           autoplay
-          lazy
           pagination={{clickable: true}}
           style={{
-            '--swiper-pagination-color': 'rgba(255,255,255,0.8)',
+            '--swiper-pagination-color': 'rgba(255,255,255, 0.8)',
             '--swiper-pagination-bullet-inactive-color': '#fff',
             '--swiper-pagination-bullet-inactive-opacity': 0.5,
           }}
@@ -40,7 +41,7 @@ const PopupRoom = ({popupInfo}) => {
             <SwiperSlide key={url}>
               <Box
                 component='img'
-                src='url'
+                src={url}
                 alt='room'
                 sx={{
                   height: 255,
