@@ -1,19 +1,16 @@
-import BottomNav from './components/BottomNav'
-import Loading from './components/Loading'
-import NavBar from './components/NavBar'
-import Room from './components/rooms/Room'
-import Login from './components/user/Login'
-import Notification from './components/user/Notification'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import Dashboard from './pages/dashboard/Dashboard'
+import Home from './pages/Home'
 
-function App() {
+const App = () => {
   return (
     <>
-      <Loading />
-      <Notification />
-      <Login />
-      <NavBar />
-      <BottomNav />
-      <Room />
+      <BrowserRouter>
+        <Routes>
+          <Route path='dashboard/*' element={<Dashboard />} />
+          <Route path='*' element={<Home />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
