@@ -8,6 +8,9 @@ import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import SideList from './SideList'
+import {Tooltip} from '@mui/material'
+import {Home as HomeIcon} from '@mui/icons-material'
+import {useNavigate} from 'react-router-dom'
 
 const drawerWidth = 240
 
@@ -47,6 +50,8 @@ const Dashboard = () => {
     setOpen(true)
   }
 
+  const navigate = useNavigate()
+
   return (
     <ThemeProvider theme={darkTheme}>
       <Box sx={{display: 'flex'}}>
@@ -65,8 +70,13 @@ const Dashboard = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant='h6' noWrap component='div'>
-              Mini variant drawer
+            <Tooltip title='Go back to home page'>
+              <IconButton sx={{mr: 1}} onClick={() => navigate('/')}>
+                <HomeIcon />
+              </IconButton>
+            </Tooltip>
+            <Typography variant='h6' noWrap component='div' sx={{flexGrow: 1}}>
+              Dashboard
             </Typography>
           </Toolbar>
         </AppBar>
