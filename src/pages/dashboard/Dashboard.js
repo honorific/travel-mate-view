@@ -1,5 +1,5 @@
-import {useState} from 'react'
-import {styled} from '@mui/material/styles'
+import {useMemo, useState} from 'react'
+import {ThemeProvider, createTheme, styled} from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MuiAppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -31,35 +31,48 @@ const AppBar = styled(MuiAppBar, {
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false)
+  const [dark, setDark] = useState(true)
+
+  const darkTheme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: dark ? 'dark' : 'light',
+        },
+      }),
+    [dark],
+  )
 
   const handleDrawerOpen = () => {
     setOpen(true)
   }
 
   return (
-    <Box sx={{display: 'flex'}}>
-      <CssBaseline />
-      <AppBar position='fixed' open={open}>
-        <Toolbar>
-          <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            onClick={handleDrawerOpen}
-            edge='start'
-            sx={{
-              marginRight: 5,
-              ...(open && {display: 'none'}),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant='h6' noWrap component='div'>
-            Mini variant drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <SideList {...{open, setOpen}} />
-    </Box>
+    <ThemeProvider theme={darkTheme}>
+      <Box sx={{display: 'flex'}}>
+        <CssBaseline />
+        <AppBar position='fixed' open={open}>
+          <Toolbar>
+            <IconButton
+              color='inherit'
+              aria-label='open drawer'
+              onClick={handleDrawerOpen}
+              edge='start'
+              sx={{
+                marginRight: 5,
+                ...(open && {display: 'none'}),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant='h6' noWrap component='div'>
+              Mini variant drawer
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <SideList {...{open, setOpen}} />
+      </Box>
+    </ThemeProvider>
   )
 }
 
