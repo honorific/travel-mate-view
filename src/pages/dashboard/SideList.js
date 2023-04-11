@@ -1,5 +1,5 @@
 import MuiDrawer from '@mui/material/Drawer'
-import {ChevronLeft, Inbox, Mail} from '@mui/icons-material'
+import {ChevronLeft, Inbox, Logout, Mail} from '@mui/icons-material'
 import {
   Avatar,
   Box,
@@ -15,6 +15,7 @@ import {
   styled,
   useTheme,
 } from '@mui/material'
+import {useNavigate} from 'react-router-dom'
 import {useValue} from '../../context/ContextProvider'
 
 const drawerWidth = 240
@@ -69,7 +70,13 @@ const Drawer = styled(MuiDrawer, {
 const SideList = ({open, setOpen}) => {
   const {
     state: {currentUser},
+    dispatch,
   } = useValue()
+  const navigate = useNavigate()
+  const handleLogout = () => {
+    dispatch({type: 'UPDATE_USER', payload: null})
+    navigate('/')
+  }
   return (
     <>
       <Drawer variant='permanent' open={open}>
@@ -118,6 +125,11 @@ const SideList = ({open, setOpen}) => {
           {open && (
             <Typography variant='body2'>{currentUser?.email}</Typography>
           )}
+          <Tooltip title='Logout' sx={{mt: 2}}>
+            <IconButton onClick={handleLogout}>
+              <Logout />
+            </IconButton>
+          </Tooltip>
         </Box>
       </Drawer>
       <Box component='main' sx={{flexGrow: 1, p: 3}}>
