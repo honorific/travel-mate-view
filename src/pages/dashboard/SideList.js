@@ -18,12 +18,13 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Stack,
   Tooltip,
   Typography,
   styled,
   useTheme,
 } from '@mui/material'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, Routes, Route} from 'react-router-dom'
 import {useValue} from '../../context/ContextProvider'
 import {useMemo} from 'react'
 import Rooms from './rooms/Rooms'
@@ -137,6 +138,7 @@ const SideList = ({open, setOpen}) => {
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
+                onClick={() => navigate(item.link)}
               >
                 <ListItemIcon
                   sx={{
@@ -164,21 +166,44 @@ const SideList = ({open, setOpen}) => {
             />
           </Tooltip>
         </Box>
-        <Box sx={{textAlign: 'center'}}>
-          {open && <Typography>{currentUser?.name}</Typography>}
-          <Typography variant='body2'>{currentUser?.role || 'Role'}</Typography>
-          {open && (
-            <Typography variant='body2'>{currentUser?.email}</Typography>
-          )}
-          <Tooltip title='Logout' sx={{mt: 2}}>
-            <IconButton onClick={handleLogout}>
-              <Logout />
-            </IconButton>
-          </Tooltip>
+        <Box
+          sx={{
+            textAlign: 'center',
+            height: '100%',
+          }}
+        >
+          <Stack
+            direction='column'
+            justifyContent='space-between'
+            alignItems='center'
+            sx={{height: '100%'}}
+          >
+            {open && <Typography>{currentUser?.name}</Typography>}
+            <Typography variant='body2'>
+              {currentUser?.role || 'Role'}
+            </Typography>
+            {open && (
+              <Typography variant='body2'>{currentUser?.email}</Typography>
+            )}
+            <Tooltip title='Logout' sx={{mb: 2}}>
+              <IconButton onClick={handleLogout}>
+                <Logout />
+              </IconButton>
+            </Tooltip>
+          </Stack>
         </Box>
       </Drawer>
       <Box component='main' sx={{flexGrow: 1, p: 3}}>
         <DrawerHeader />
+        <Routes>
+          {list.map((item) => (
+            <Route
+              key={item.title}
+              path={item.link}
+              element={item.component}
+            ></Route>
+          ))}
+        </Routes>
       </Box>
     </>
   )
