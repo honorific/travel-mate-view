@@ -18,6 +18,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Stack,
   Tooltip,
   Typography,
   styled,
@@ -164,17 +165,31 @@ const SideList = ({open, setOpen}) => {
             />
           </Tooltip>
         </Box>
-        <Box sx={{textAlign: 'center'}}>
-          {open && <Typography>{currentUser?.name}</Typography>}
-          <Typography variant='body2'>{currentUser?.role || 'Role'}</Typography>
-          {open && (
-            <Typography variant='body2'>{currentUser?.email}</Typography>
-          )}
-          <Tooltip title='Logout' sx={{mt: 2}}>
-            <IconButton onClick={handleLogout}>
-              <Logout />
-            </IconButton>
-          </Tooltip>
+        <Box
+          sx={{
+            textAlign: 'center',
+            height: '100%',
+          }}
+        >
+          <Stack
+            direction='column'
+            justifyContent='space-between'
+            alignItems='center'
+            sx={{height: '100%'}}
+          >
+            {open && <Typography>{currentUser?.name}</Typography>}
+            <Typography variant='body2'>
+              {currentUser?.role || 'Role'}
+            </Typography>
+            {open && (
+              <Typography variant='body2'>{currentUser?.email}</Typography>
+            )}
+            <Tooltip title='Logout' sx={{mb: 2}}>
+              <IconButton onClick={handleLogout}>
+                <Logout />
+              </IconButton>
+            </Tooltip>
+          </Stack>
         </Box>
       </Drawer>
       <Box component='main' sx={{flexGrow: 1, p: 3}}>
