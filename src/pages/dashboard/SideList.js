@@ -1,6 +1,15 @@
 import MuiDrawer from '@mui/material/Drawer'
-import {ChevronLeft, Inbox, Mail} from '@mui/icons-material'
 import {
+  ChevronLeft,
+  Dashboard,
+  KingBed,
+  Logout,
+  MarkChatUnread,
+  PeopleAlt,
+  NotificationsActive,
+} from '@mui/icons-material'
+import {
+  Avatar,
   Box,
   Divider,
   IconButton,
@@ -9,10 +18,19 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Tooltip,
   Typography,
   styled,
   useTheme,
 } from '@mui/material'
+import {useNavigate} from 'react-router-dom'
+import {useValue} from '../../context/ContextProvider'
+import {useMemo} from 'react'
+import Rooms from './rooms/Rooms'
+import Users from './users/Users'
+import Main from './main/Main'
+import Requests from './requests/Requests'
+import Messages from '../messages/Messages'
 
 const drawerWidth = 240
 
@@ -64,7 +82,43 @@ const Drawer = styled(MuiDrawer, {
 }))
 
 const SideList = ({open, setOpen}) => {
-  // const theme = useTheme()
+  const {
+    state: {currentUser},
+    dispatch,
+  } = useValue()
+
+  const list = useMemo(
+    () => [
+      {title: 'Main', icon: <Dashboard />, link: '', component: <Main />},
+      {
+        title: 'Users',
+        icon: <PeopleAlt />,
+        link: 'users',
+        component: <Users />,
+      },
+      {title: 'Rooms', icon: <KingBed />, link: 'rooms', component: <Rooms />},
+      {
+        title: 'Requests',
+        icon: <NotificationsActive />,
+        link: 'requests',
+        component: <Requests />,
+      },
+      {
+        title: 'Messages',
+        icon: <MarkChatUnread />,
+        link: 'messages',
+        component: <Messages />,
+      },
+    ],
+    [],
+  )
+
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    dispatch({type: 'UPDATE_USER', payload: null})
+    navigate('/')
+  }
   return (
     <>
       <Drawer variant='permanent' open={open}>
@@ -75,8 +129,8 @@ const SideList = ({open, setOpen}) => {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{display: 'block'}}>
+          {list.map((item) => (
+            <ListItem key={item.title} disablePadding sx={{display: 'block'}}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -91,70 +145,40 @@ const SideList = ({open, setOpen}) => {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <Inbox /> : <Mail />}
+                  {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{opacity: open ? 1 : 0}} />
+                <ListItemText
+                  primary={item.title}
+                  sx={{opacity: open ? 1 : 0}}
+                />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
         <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{display: 'block'}}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <Inbox /> : <Mail />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{opacity: open ? 1 : 0}} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+        <Box sx={{mx: 'auto', mt: 3, mb: 1}}>
+          <Tooltip title={currentUser?.name || ''}>
+            <Avatar
+              src={currentUser?.photoURL}
+              {...(open && {sx: {height: 100, width: 100}})}
+            />
+          </Tooltip>
+        </Box>
+        <Box sx={{textAlign: 'center'}}>
+          {open && <Typography>{currentUser?.name}</Typography>}
+          <Typography variant='body2'>{currentUser?.role || 'Role'}</Typography>
+          {open && (
+            <Typography variant='body2'>{currentUser?.email}</Typography>
+          )}
+          <Tooltip title='Logout' sx={{mt: 2}}>
+            <IconButton onClick={handleLogout}>
+              <Logout />
+            </IconButton>
+          </Tooltip>
+        </Box>
       </Drawer>
       <Box component='main' sx={{flexGrow: 1, p: 3}}>
         <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
       </Box>
     </>
   )

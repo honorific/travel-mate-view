@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import SideList from './SideList'
 import {Tooltip} from '@mui/material'
-import {Home as HomeIcon} from '@mui/icons-material'
+import {Brightness4, Brightness7, Home as HomeIcon} from '@mui/icons-material'
 import {useNavigate} from 'react-router-dom'
 
 const drawerWidth = 240
@@ -78,6 +78,9 @@ const Dashboard = () => {
             <Typography variant='h6' noWrap component='div' sx={{flexGrow: 1}}>
               Dashboard
             </Typography>
+            <IconButton onClick={() => setDark(!dark)}>
+              {dark ? <Brightness7 /> : <Brightness4 />}
+            </IconButton>
           </Toolbar>
         </AppBar>
         <SideList {...{open, setOpen}} />
