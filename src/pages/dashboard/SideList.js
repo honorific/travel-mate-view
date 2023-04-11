@@ -1,5 +1,13 @@
 import MuiDrawer from '@mui/material/Drawer'
-import {ChevronLeft, Inbox, Logout, Mail} from '@mui/icons-material'
+import {
+  ChevronLeft,
+  Dashboard,
+  KingBed,
+  Logout,
+  MarkChatUnread,
+  PeopleAlt,
+  NotificationsActive,
+} from '@mui/icons-material'
 import {
   Avatar,
   Box,
@@ -17,6 +25,12 @@ import {
 } from '@mui/material'
 import {useNavigate} from 'react-router-dom'
 import {useValue} from '../../context/ContextProvider'
+import {useMemo} from 'react'
+import Rooms from './rooms/Rooms'
+import Users from './users/Users'
+import Main from './main/Main'
+import Requests from './requests/Requests'
+import Messages from '../messages/Messages'
 
 const drawerWidth = 240
 
@@ -72,7 +86,35 @@ const SideList = ({open, setOpen}) => {
     state: {currentUser},
     dispatch,
   } = useValue()
+
+  const list = useMemo(
+    () => [
+      {title: 'Main', icon: <Dashboard />, link: '', component: <Main />},
+      {
+        title: 'Users',
+        icon: <PeopleAlt />,
+        link: 'users',
+        component: <Users />,
+      },
+      {title: 'Rooms', icon: <KingBed />, link: 'rooms', component: <Rooms />},
+      {
+        title: 'Requests',
+        icon: <NotificationsActive />,
+        link: 'requests',
+        component: <Requests />,
+      },
+      {
+        title: 'Messages',
+        icon: <MarkChatUnread />,
+        link: 'messages',
+        component: <Messages />,
+      },
+    ],
+    [],
+  )
+
   const navigate = useNavigate()
+
   const handleLogout = () => {
     dispatch({type: 'UPDATE_USER', payload: null})
     navigate('/')
@@ -87,8 +129,8 @@ const SideList = ({open, setOpen}) => {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{display: 'block'}}>
+          {list.map((item) => (
+            <ListItem key={item.title} disablePadding sx={{display: 'block'}}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -103,9 +145,12 @@ const SideList = ({open, setOpen}) => {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <Inbox /> : <Mail />}
+                  {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{opacity: open ? 1 : 0}} />
+                <ListItemText
+                  primary={item.title}
+                  sx={{opacity: open ? 1 : 0}}
+                />
               </ListItemButton>
             </ListItem>
           ))}
