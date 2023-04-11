@@ -24,7 +24,7 @@ import {
   styled,
   useTheme,
 } from '@mui/material'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, Routes, Route} from 'react-router-dom'
 import {useValue} from '../../context/ContextProvider'
 import {useMemo} from 'react'
 import Rooms from './rooms/Rooms'
@@ -138,6 +138,7 @@ const SideList = ({open, setOpen}) => {
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
+                onClick={() => navigate(item.link)}
               >
                 <ListItemIcon
                   sx={{
@@ -194,6 +195,15 @@ const SideList = ({open, setOpen}) => {
       </Drawer>
       <Box component='main' sx={{flexGrow: 1, p: 3}}>
         <DrawerHeader />
+        <Routes>
+          {list.map((item) => (
+            <Route
+              key={item.title}
+              path={item.link}
+              element={item.component}
+            ></Route>
+          ))}
+        </Routes>
       </Box>
     </>
   )
