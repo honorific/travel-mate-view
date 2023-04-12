@@ -1,6 +1,9 @@
-import React from 'react'
+import {useEffect} from 'react'
 
-const Rooms = () => {
+const Rooms = ({setSelectedLink, link}) => {
+  useEffect(() => {
+    setSelectedLink(link)
+  }, [])
   return <div>Rooms</div>
 }
 

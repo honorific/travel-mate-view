@@ -26,7 +26,7 @@ import {
 } from '@mui/material'
 import {useNavigate, Routes, Route} from 'react-router-dom'
 import {useValue} from '../../context/ContextProvider'
-import {useMemo} from 'react'
+import {useMemo, useState} from 'react'
 import Rooms from './rooms/Rooms'
 import Users from './users/Users'
 import Main from './main/Main'
@@ -88,27 +88,39 @@ const SideList = ({open, setOpen}) => {
     dispatch,
   } = useValue()
 
+  const [selectedLink, setSelectedLink] = useState('')
+
   const list = useMemo(
     () => [
-      {title: 'Main', icon: <Dashboard />, link: '', component: <Main />},
+      {
+        title: 'Main',
+        icon: <Dashboard />,
+        link: '',
+        component: <Main {...{setSelectedLink, link: ''}} />,
+      },
       {
         title: 'Users',
         icon: <PeopleAlt />,
         link: 'users',
-        component: <Users />,
+        component: <Users {...{setSelectedLink, link: 'users'}} />,
       },
-      {title: 'Rooms', icon: <KingBed />, link: 'rooms', component: <Rooms />},
+      {
+        title: 'Rooms',
+        icon: <KingBed />,
+        link: 'rooms',
+        component: <Rooms {...{setSelectedLink, link: 'rooms'}} />,
+      },
       {
         title: 'Requests',
         icon: <NotificationsActive />,
         link: 'requests',
-        component: <Requests />,
+        component: <Requests {...{setSelectedLink, link: 'requests'}} />,
       },
       {
         title: 'Messages',
         icon: <MarkChatUnread />,
         link: 'messages',
-        component: <Messages />,
+        component: <Messages {...{setSelectedLink, link: 'messages'}} />,
       },
     ],
     [],
@@ -139,6 +151,7 @@ const SideList = ({open, setOpen}) => {
                   px: 2.5,
                 }}
                 onClick={() => navigate(item.link)}
+                selected={selectedLink === item.link}
               >
                 <ListItemIcon
                   sx={{
@@ -176,7 +189,7 @@ const SideList = ({open, setOpen}) => {
             direction='column'
             justifyContent='space-between'
             alignItems='center'
-            sx={{height: '100%'}}
+            //sx={{height: '100%'}}
           >
             {open && <Typography>{currentUser?.name}</Typography>}
             <Typography variant='body2'>
@@ -186,7 +199,10 @@ const SideList = ({open, setOpen}) => {
               <Typography variant='body2'>{currentUser?.email}</Typography>
             )}
             <Tooltip title='Logout' sx={{mb: 2}}>
-              <IconButton onClick={handleLogout}>
+              <IconButton
+                onClick={handleLogout}
+                sx={{position: 'absolute', bottom: '10px !important'}}
+              >
                 <Logout />
               </IconButton>
             </Tooltip>
