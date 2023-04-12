@@ -189,7 +189,7 @@ const SideList = ({open, setOpen}) => {
             direction='column'
             justifyContent='space-between'
             alignItems='center'
-            sx={{height: '100%'}}
+            //sx={{height: '100%'}}
           >
             {open && <Typography>{currentUser?.name}</Typography>}
             <Typography variant='body2'>
@@ -199,7 +199,10 @@ const SideList = ({open, setOpen}) => {
               <Typography variant='body2'>{currentUser?.email}</Typography>
             )}
             <Tooltip title='Logout' sx={{mb: 2}}>
-              <IconButton onClick={handleLogout}>
+              <IconButton
+                onClick={handleLogout}
+                sx={{position: 'absolute', bottom: '10px !important'}}
+              >
                 <Logout />
               </IconButton>
             </Tooltip>
