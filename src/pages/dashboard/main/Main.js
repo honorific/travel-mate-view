@@ -1,9 +1,11 @@
-import React from 'react'
+import {useEffect} from 'react'
 
-function Main() {
-  return (
-    <div>Main</div>
-  )
+function Main({setSelectedLink, link}) {
+  useEffect(() => {
+    setSelectedLink(link)
+  }, [])
+
+  return <div>Main</div>
 }
 
 export default Main

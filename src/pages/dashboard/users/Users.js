@@ -1,9 +1,10 @@
-import React from 'react'
+import {useEffect} from 'react'
 
-function Users() {
-  return (
-    <div>Users</div>
-  )
+function Users({setSelectedLink, link}) {
+  useEffect(() => {
+    setSelectedLink(link)
+  }, [])
+  return <div>Users</div>
 }
 
 export default Users
