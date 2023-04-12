@@ -13,12 +13,12 @@ function Main({setSelectedLink, link}) {
         display: {
           xs: 'flex',
           md: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gridAutoRows: 'minmax(100px,auto)',
-          gap: 3,
-          textAlign: 'center',
-          flexDirection: 'column',
         },
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gridAutoRows: 'minmax(100px, auto)',
+        gap: 3,
+        textAlign: 'center',
+        flexDirection: 'column',
       }}
     >
       <Paper elevation={3} sx={{p: 3}}>
