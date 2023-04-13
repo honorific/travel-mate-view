@@ -66,7 +66,6 @@ function Main({setSelectedLink, link}) {
           <Typography>Recently added users</Typography>
           <List>
             {users.slice(0, 4).map((user, i) => {
-              console.log('useris: ', user)
               let theDate = new Date(user?.createdAt)
               return (
                 <>
@@ -92,7 +91,6 @@ function Main({setSelectedLink, link}) {
           <Typography>Recently added rooms</Typography>
           <List>
             {rooms.slice(0, 4).map((room, i) => {
-              console.log('room is: ', room)
               let theDate = new Date(room?.createdAt)
               let nowDate = new Date()
               let passed = 'a few moments ago'

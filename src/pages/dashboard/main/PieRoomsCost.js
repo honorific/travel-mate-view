@@ -42,7 +42,7 @@ const PieRoomsCost = () => {
       lessThan15 = 0,
       between15And35 = 0,
       moreThan35 = 0
-    rooms.map((room) => {
+    rooms.forEach((room) => {
       if (room.price === 0) return free++
       if (room.price < 15) return lessThan15++
       if (room.price <= 35) return between15And35++

@@ -7,6 +7,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts'
+import {useValue} from '../../../context/ContextProvider'
+import {useEffect, useState} from 'react'
 
 const months = 5
 const today = new Date()
@@ -23,13 +25,51 @@ for (let i = 0; i < months; i++) {
     users: 0,
   })
 }
-console.log('tempdata is: ', tempData)
+
 const AreaRoomsUsers = () => {
+  const {
+    state: {rooms, users},
+  } = useValue()
+  console.log('tempdata is: ', tempData)
+  const [data, setData] = useState([])
+  useEffect(() => {
+    for (let i = 0; i < months; i++) {
+      tempData[i].users = 0
+    }
+    users.forEach((user) => {
+      for (let i = 0; i < months; i++) {
+        if (
+          new Date(tempData[i].date).getMonth() ==
+          new Date(user?.createdAt).getMonth()
+        ) {
+          return tempData[i].users++
+        }
+      }
+    })
+    setData([...tempData])
+  }, [users])
+
+  useEffect(() => {
+    for (let i = 0; i < months; i++) {
+      tempData[i].rooms = 0
+    }
+    rooms.forEach((room) => {
+      for (let i = 0; i < months; i++) {
+        if (
+          new Date(tempData[i].date).getMonth() ==
+          new Date(room?.createdAt).getMonth()
+        ) {
+          return tempData[i].rooms++
+        }
+      }
+    })
+    setData([...tempData])
+  }, [rooms])
   return (
     <div style={{width: '100%', height: 300, minWidth: 250}}>
       <ResponsiveContainer>
         <AreaChart
-          data={tempData}
+          data={data}
           margin={{
             top: 10,
             right: 10,
@@ -43,14 +83,14 @@ const AreaRoomsUsers = () => {
           <Tooltip />
           <Area
             type='monotone'
-            dataKey='uv'
+            dataKey='users'
             stackId='1'
             stroke='#8884d8'
             fill='#8884d8'
           />
           <Area
             type='monotone'
-            dataKey='pv'
+            dataKey='rooms'
             stackId='1'
             stroke='#82ca9d'
             fill='#82ca9d'
