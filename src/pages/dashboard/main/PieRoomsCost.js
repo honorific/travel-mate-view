@@ -1,9 +1,9 @@
-import {Box} from '@mui/material'
+import {Box, Stack, Typography} from '@mui/material'
 import {PieChart, Pie, Cell, Tooltip} from 'recharts'
 import {useValue} from '../../../context/ContextProvider'
 import {useEffect, useState} from 'react'
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
+const COLORS = ['#00C49F', '#0088FE', '#FFBB28', '#FF8042']
 
 const RADIAN = Math.PI / 180
 const renderCustomizedLabel = ({
@@ -80,6 +80,19 @@ const PieRoomsCost = () => {
         </Pie>
         <Tooltip />
       </PieChart>
+      <Stack gap={2}>
+        <Typography variant='h6'>Rooms cost</Typography>
+        <Box sx={{display: 'flex', gap: 3, flexWrap: 'wrap'}}>
+          {COLORS.map((color, i) => (
+            <Stack key={color} alignItems='center' spacing={1}>
+              <Box sx={{height: 20, width: 20, background: color}} />
+              <Typography variant='body2' sx={{opacity: 0.7}}>
+                {costGroups[i]?.name}
+              </Typography>
+            </Stack>
+          ))}
+        </Box>
+      </Stack>
     </Box>
   )
 }
