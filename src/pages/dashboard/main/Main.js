@@ -14,6 +14,8 @@ import {useEffect} from 'react'
 import {useValue} from '../../../context/ContextProvider'
 import {getUsers} from '../../../actions/user'
 import {getRooms} from '../../../actions/room'
+import PieRoomsCost from './PieRoomsCost'
+import AreaRoomsUsers from './AreaRoomsUsers'
 
 function Main({setSelectedLink, link}) {
   const {
@@ -64,7 +66,6 @@ function Main({setSelectedLink, link}) {
           <Typography>Recently added users</Typography>
           <List>
             {users.slice(0, 4).map((user, i) => {
-              console.log('useris: ', user)
               let theDate = new Date(user?.createdAt)
               return (
                 <>
@@ -90,7 +91,6 @@ function Main({setSelectedLink, link}) {
           <Typography>Recently added rooms</Typography>
           <List>
             {rooms.slice(0, 4).map((room, i) => {
-              console.log('room is: ', room)
               let theDate = new Date(room?.createdAt)
               let nowDate = new Date()
               let passed = 'a few moments ago'
@@ -129,6 +129,12 @@ function Main({setSelectedLink, link}) {
             })}
           </List>
         </Box>
+      </Paper>
+      <Paper elevation={3} sx={{p: 2, gridColumn: '1/3'}}>
+        <PieRoomsCost />
+      </Paper>
+      <Paper elevation={3} sx={{p: 2, gridColumn: '1/3'}}>
+        <AreaRoomsUsers />
       </Paper>
     </Box>
   )
