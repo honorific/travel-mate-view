@@ -14,6 +14,7 @@ import {useEffect} from 'react'
 import {useValue} from '../../../context/ContextProvider'
 import {getUsers} from '../../../actions/user'
 import {getRooms} from '../../../actions/room'
+import PieRoomsCost from './PieRoomsCost'
 
 function Main({setSelectedLink, link}) {
   const {
@@ -129,6 +130,9 @@ function Main({setSelectedLink, link}) {
             })}
           </List>
         </Box>
+      </Paper>
+      <Paper elevation={3} sx={{p: 2, gridColumn: '1/3'}}>
+        <PieRoomsCost />
       </Paper>
     </Box>
   )
