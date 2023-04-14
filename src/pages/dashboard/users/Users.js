@@ -12,6 +12,8 @@ function Users({setSelectedLink, link}) {
     dispatch,
   } = useValue()
 
+  const [rowId, setRowId] = useState(null)
+
   useEffect(() => {
     setSelectedLink(link)
     if (users.length === 0) getUsers(dispatch)
@@ -68,10 +70,10 @@ function Users({setSelectedLink, link}) {
         field: 'actions',
         headerName: 'Actions',
         type: 'actions',
-        renderCell: (params) => <UsersActions />,
+        renderCell: (params) => <UsersActions {...{params, rowId, setRowId}} />,
       },
     ],
-    [],
+    [rowId],
   )
   const getRowSpacing = useCallback((params) => {
     return {
