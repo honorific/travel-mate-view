@@ -29,13 +29,17 @@ const UsersActions = ({params, rowId, setRowId}) => {
   const handleSubmit = async () => {
     setLoading(true)
     setTimeout(async () => {
-      const {role, active, _id} = params.row
-      const result = await updateStatus({role, active}, _id, dispatch)
-      if (result) {
-        setSuccess(true)
-        setRowId([])
+      for (let i = 0; i < rowId.length; i++) {
+        if (rowId[i] == params.id) {
+          const {role, active, _id} = params.row
+          const result = await updateStatus({role, active}, _id, dispatch)
+          if (result) {
+            setSuccess(true)
+            setRowId(rowId.filter((row) => row !== params.id))
+          }
+          setLoading(false)
+        }
       }
-      setLoading(false)
     }, 1000)
   }
 
