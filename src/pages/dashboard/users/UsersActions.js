@@ -17,6 +17,7 @@ const UsersActions = ({params, rowId, setRowId}) => {
         for (let i = 0; i < rowId.length; i++) {
           if (rowId[i] == params.id && loading === false) {
             setDisabled(false)
+            setSuccess(false)
           }
         }
       } else {
