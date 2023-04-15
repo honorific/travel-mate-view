@@ -12,7 +12,8 @@ function Users({setSelectedLink, link}) {
     dispatch,
   } = useValue()
 
-  const [rowId, setRowId] = useState(null)
+  const [rowId, setRowId] = useState([])
+  console.log('rowId is: ', rowId)
 
   useEffect(() => {
     setSelectedLink(link)
@@ -105,6 +106,27 @@ function Users({setSelectedLink, link}) {
             bgcolor: (theme) =>
               theme.palette.mode === 'light' ? grey[200] : grey[900],
           },
+        }}
+        onCellEditStop={(params) => {
+          setRowId((prev) => {
+            if (Array.isArray(prev)) {
+              if (prev.length > 0) {
+                let checker = false
+                for (let i = 0; i < prev.length; i++) {
+                  if (prev[i] === params.id) {
+                    checker = true
+                  }
+                }
+                if (!checker) {
+                  return [...prev, params.id]
+                } else {
+                  return [...prev]
+                }
+              } else {
+                return [...prev, params.id]
+              }
+            }
+          })
         }}
       />
     </Box>
