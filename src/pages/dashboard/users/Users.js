@@ -1,4 +1,4 @@
-import {Avatar, Box, Typography} from '@mui/material'
+import {Avatar, Box, Container, Typography} from '@mui/material'
 import {DataGrid, gridClasses} from '@mui/x-data-grid'
 import {useCallback, useEffect, useMemo, useState} from 'react'
 import {useValue} from '../../../context/ContextProvider'
@@ -84,7 +84,17 @@ function Users({setSelectedLink, link}) {
   }, [])
 
   return (
-    <Box sx={{height: 400, width: '100%'}}>
+    <Box
+      sx={{
+        height: 400,
+        width: {
+          lg: '98%',
+          md: '960px',
+        },
+        p: 0,
+        m: 0,
+      }}
+    >
       <Typography
         variant='h3'
         component='h3'
@@ -106,6 +116,7 @@ function Users({setSelectedLink, link}) {
             bgcolor: (theme) =>
               theme.palette.mode === 'light' ? grey[200] : grey[900],
           },
+          width: '100%',
         }}
         onCellEditStop={(params) => {
           setRowId((prev) => {
