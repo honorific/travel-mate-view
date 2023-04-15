@@ -28,13 +28,15 @@ const UsersActions = ({params, rowId, setRowId}) => {
 
   const handleSubmit = async () => {
     setLoading(true)
-    const {role, active, _id} = params.row
-    const result = await updateStatus({role, active}, _id, dispatch)
-    if (result) {
-      setSuccess(true)
-      setRowId([])
-    }
-    setLoading(false)
+    setTimeout(async () => {
+      const {role, active, _id} = params.row
+      const result = await updateStatus({role, active}, _id, dispatch)
+      if (result) {
+        setSuccess(true)
+        setRowId([])
+      }
+      setLoading(false)
+    }, 1000)
   }
 
   return (
