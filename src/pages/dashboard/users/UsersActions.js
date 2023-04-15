@@ -2,8 +2,11 @@ import {Check, Save} from '@mui/icons-material'
 import {Box, CircularProgress, Fab} from '@mui/material'
 import {green} from '@mui/material/colors'
 import React, {useEffect, useState} from 'react'
+import {updateStatus} from '../../../actions/user'
+import {useValue} from '../../../context/ContextProvider'
 
 const UsersActions = ({params, rowId, setRowId}) => {
+  const {dispatch} = useValue()
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [disabled, setDisabled] = useState(true)
@@ -12,7 +15,7 @@ const UsersActions = ({params, rowId, setRowId}) => {
     if (Array.isArray(rowId)) {
       if (rowId.length > 0) {
         for (let i = 0; i < rowId.length; i++) {
-          if (rowId[i] == params.id) {
+          if (rowId[i] == params.id && loading === false) {
             setDisabled(false)
           }
         }
@@ -22,7 +25,16 @@ const UsersActions = ({params, rowId, setRowId}) => {
     }
   }, [rowId.length, params.id])
 
-  const handleSubmit = async () => {}
+  const handleSubmit = async () => {
+    setLoading(true)
+    const {role, active, _id} = params.row
+    const result = await updateStatus({role, active}, _id, dispatch)
+    if (result) {
+      setSuccess(true)
+      setRowId([])
+    }
+    setLoading(false)
+  }
 
   return (
     <Box sx={{position: 'relative', m: 1}}>
