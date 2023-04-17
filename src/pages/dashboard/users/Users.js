@@ -6,7 +6,7 @@ import {getUsers} from '../../../actions/user'
 import {grey} from '@mui/material/colors'
 import UsersActions from './UsersActions'
 
-function Users({setSelectedLink, link}) {
+const Users = ({setSelectedLink, link}) => {
   const {
     state: {users},
     dispatch,
