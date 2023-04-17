@@ -2,9 +2,13 @@ import {Delete, Edit, Preview} from '@mui/icons-material'
 import {Box, IconButton, Tooltip} from '@mui/material'
 import React from 'react'
 import {useValue} from '../../../context/ContextProvider'
+import {deleteRoom} from '../../../actions/room'
 
 const RoomsActions = ({params}) => {
-  const {dispatch} = useValue()
+  const {
+    state: {currentUser},
+    dispatch,
+  } = useValue()
   return (
     <Box>
       <Tooltip title='view room details'>
@@ -23,7 +27,9 @@ const RoomsActions = ({params}) => {
         </IconButton>
       </Tooltip>
       <Tooltip title='delete this room'>
-        <IconButton onClick={() => {}}>
+        <IconButton
+          onClick={() => deleteRoom(params.row, currentUser, dispatch)}
+        >
           <Delete />
         </IconButton>
       </Tooltip>
