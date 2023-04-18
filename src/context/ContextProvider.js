@@ -13,12 +13,14 @@ const initialState = {
   images: [],
   details: {title: '', description: '', price: 0},
   location: {lng: 0, lat: 0},
+  updatedRoom: null,
   rooms: [],
   priceFilter: 50,
   adddressFilter: null,
   filteredRooms: [],
   room: null,
   users: [],
+  section: 0,
 }
 
 const Context = createContext(initialState)
@@ -33,7 +35,7 @@ const ContextProvider = ({children}) => {
   const containerRef = useRef()
   useMemo(() => {
     const currentUserFromCookie = getUserInfo('currentUser')
-    if (currentUserFromCookie && currentUserFromCookie !== 'undefined') {
+    if (currentUserFromCookie !== 'undefined') {
       dispatch({type: 'UPDATE_USER', payload: currentUserFromCookie})
     } else {
       if (currentUserFromCookie === 'undefined') {
