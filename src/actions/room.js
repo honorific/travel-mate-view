@@ -56,7 +56,7 @@ export const deleteRoom = async (room, currentUser, dispatch) => {
       },
     })
     dispatch({type: 'DELETE_ROOM', payload: result._id})
-    deleteImages(room.images, currentUser.id)
+    deleteImages(room.images, room.uid)
   }
   dispatch({type: 'END_LOADING'})
 }
