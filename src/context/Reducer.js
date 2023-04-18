@@ -30,7 +30,7 @@ const reducer = (state, action) => {
       }
 
     case 'UPDATE_IMAGES':
-      return {...state, images: [...state.images, action.payload]}
+      return {...state, images: [...state.images, ...action.payload]}
 
     case 'DELETE_IMAGE':
       return {
@@ -44,12 +44,16 @@ const reducer = (state, action) => {
     case 'UPDATE_LOCATION':
       return {...state, location: action.payload}
 
+    case 'UPDATE_UPDATED_ROOM':
+      return {...state, updatedRoom: action.payload}
+
     case 'RESET_ROOM':
       return {
         ...state,
         images: [],
         details: {title: '', description: '', price: 0},
         location: {lng: 0, lat: 0},
+        updatedRoom: null,
       }
 
     case 'UPDATE_ROOMS':
