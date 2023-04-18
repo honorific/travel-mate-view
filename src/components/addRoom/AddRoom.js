@@ -13,12 +13,12 @@ import AddLocation from './addLocation/AddLocation'
 import AddImages from './addImages/AddImages'
 import AddDetails from './addDetailes/AddDetails'
 import {useValue} from '../../context/ContextProvider'
-import {Send} from '@mui/icons-material'
-import {createRoom} from '../../actions/room'
+import {Cancel, Send} from '@mui/icons-material'
+import {createRoom, updateRoom} from '../../actions/room'
 
 const AddRoom = () => {
   const {
-    state: {images, details, location, currentUser},
+    state: {images, details, location, currentUser, updatedRoom},
     dispatch,
   } = useValue()
 
@@ -39,6 +39,7 @@ const AddRoom = () => {
       description: details.description,
       images,
     }
+    if (updatedRoom) return updateRoom(room, currentUser, dispatch, updatedRoom)
     createRoom(room, currentUser, dispatch)
   }
 
@@ -101,6 +102,8 @@ const AddRoom = () => {
     }
   }, [steps])
 
+  const handleCancel = () => {}
+
   return (
     <Container sx={{my: 4}}>
       <Stepper alternativeLabel nonLinear activeStep={activeStep} sx={{mb: 3}}>
@@ -139,8 +142,9 @@ const AddRoom = () => {
             Next
           </Button>
         </Stack>
-        {showSubmit && (
-          <Stack sx={{alignItems: 'center'}}>
+
+        <Stack sx={{alignItems: 'center', justifyContent: 'center', gap: 2}}>
+          {showSubmit && (
             <Button
               fullWidth
               variant='contained'
@@ -148,10 +152,18 @@ const AddRoom = () => {
               onClick={handleSubmit}
               sx={{mt: 5}}
             >
-              Add room
+              {updatedRoom ? 'Update' : 'submit'}
             </Button>
-          </Stack>
-        )}
+          )}
+          <Button
+            variant='outlined'
+            fullWidth
+            endIcon={<Cancel />}
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+        </Stack>
       </Box>
     </Container>
   )
