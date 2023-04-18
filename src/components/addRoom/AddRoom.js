@@ -16,7 +16,7 @@ import {useValue} from '../../context/ContextProvider'
 import {Send} from '@mui/icons-material'
 import {createRoom} from '../../actions/room'
 
-const AddRoom = ({setPage}) => {
+const AddRoom = () => {
   const {
     state: {images, details, location, currentUser},
     dispatch,
@@ -39,7 +39,7 @@ const AddRoom = ({setPage}) => {
       description: details.description,
       images,
     }
-    createRoom(room, currentUser, dispatch, setPage)
+    createRoom(room, currentUser, dispatch)
   }
 
   const checkDisabled = () => {

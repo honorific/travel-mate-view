@@ -3,7 +3,7 @@ import fetchData from '../utils/fetchData'
 
 const url = `${process.env.REACT_APP_SERVER_URL}/room`
 
-export const createRoom = async (room, currentUser, dispatch, setPage) => {
+export const createRoom = async (room, currentUser, dispatch) => {
   dispatch({type: 'START_LOADING'})
   const result = await fetchData(
     {
@@ -23,7 +23,7 @@ export const createRoom = async (room, currentUser, dispatch, setPage) => {
       },
     })
     dispatch({type: 'RESET_ROOM'})
-    setPage(0)
+    dispatch({type: 'UPDATE_SECTION', payload: 0})
     dispatch({type: 'UPDATE_ROOM', payload: result})
   }
   dispatch({type: 'END_LOADING'})

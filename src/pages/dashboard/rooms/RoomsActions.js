@@ -9,6 +9,8 @@ const RoomsActions = ({params}) => {
     state: {currentUser},
     dispatch,
   } = useValue()
+
+  const handleEdit = () => {}
   return (
     <Box>
       <Tooltip title='view room details'>
@@ -22,7 +24,7 @@ const RoomsActions = ({params}) => {
         </IconButton>
       </Tooltip>
       <Tooltip title='edit this room'>
-        <IconButton onClick={() => {}}>
+        <IconButton onClick={handleEdit}>
           <Edit />
         </IconButton>
       </Tooltip>

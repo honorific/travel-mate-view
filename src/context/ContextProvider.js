@@ -19,6 +19,7 @@ const initialState = {
   filteredRooms: [],
   room: null,
   users: [],
+  section: 0,
 }
 
 const Context = createContext(initialState)
