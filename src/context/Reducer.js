@@ -63,6 +63,8 @@ const reducer = (state, action) => {
         details: {title: '', description: '', price: 0},
         location: {lng: 0, lat: 0},
         updatedRoom: null,
+        deletedImages: [],
+        addedImages: [],
       }
 
     case 'UPDATE_ROOMS':
