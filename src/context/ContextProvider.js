@@ -1,7 +1,6 @@
 import {createContext, useContext, useEffect, useMemo, useReducer} from 'react'
 import reducer from './Reducer'
-import cookies from '../utils/cookieUtil'
-import {useRef} from 'react'
+import {useRef, useEffect} from 'react'
 import {getUserInfo, removeUserInfo} from '../utils/auth'
 
 const initialState = {
@@ -46,6 +45,20 @@ const ContextProvider = ({children}) => {
       console.log('couldnt find user cookie')
     }
   }, [])
+
+  useEffect(() => {
+    if (state.currentUser) {
+      const room = JSON.parse(localStorage.getItem(state.currentUser.id))
+      if (room) {
+        dispatch({type: 'UPDATE_LOCATION', payload: room.location})
+        dispatch({type: 'UPDATE_DETAILS', payload: room.details})
+        dispatch({type: 'UPDATE_IMAGES', payload: room.images})
+        dispatch({type: 'UPDATE_UPDATED_ROOM', payload: room.updatedRoom})
+        dispatch({type: 'UPDATE_DELETED_IMAGES', payload: room.deletedImages})
+        dispatch({type: 'UPDATE_ADDED_IMAGES', payload: room.addedImages})
+      }
+    }
+  }, [state.currentUser])
 
   return (
     <Context.Provider value={{state, dispatch, mapRef, containerRef}}>
