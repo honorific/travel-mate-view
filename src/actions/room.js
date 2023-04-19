@@ -108,3 +108,37 @@ export const clearRoom = (
     deleteImages(images, currentUser.id)
   }
 }
+
+export const storeRoom = (
+  location,
+  detailes,
+  images,
+  updatedRoom,
+  deletedImages,
+  addedImages,
+  userId,
+) => {
+  if (
+    location.lng ||
+    location.lat ||
+    detailes.price ||
+    detailes.title ||
+    detailes.description ||
+    images.length
+  ) {
+    localStorage.setItem(
+      userId,
+      JSON.stringify(
+        location,
+        detailes,
+        images,
+        updatedRoom,
+        deletedImages,
+        addedImages,
+      ),
+    )
+    return true
+  } else {
+    return false
+  }
+}
