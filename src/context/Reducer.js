@@ -47,6 +47,15 @@ const reducer = (state, action) => {
     case 'UPDATE_UPDATED_ROOM':
       return {...state, updatedRoom: action.payload}
 
+    case 'UPDATE_DELETED_IMAGES':
+      return {
+        ...state,
+        deletedImages: [...state.deletedImages, ...action.payload],
+      }
+
+    case 'UPDATE_ADDED_IMAGES':
+      return {...state, addedImages: [...state.addedImages, ...action.payload]}
+
     case 'RESET_ROOM':
       return {
         ...state,

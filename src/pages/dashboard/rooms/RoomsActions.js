@@ -2,7 +2,7 @@ import {Delete, Edit, Preview} from '@mui/icons-material'
 import {Box, IconButton, Tooltip} from '@mui/material'
 import React from 'react'
 import {useValue} from '../../../context/ContextProvider'
-import {deleteRoom} from '../../../actions/room'
+import {clearRoom, deleteRoom} from '../../../actions/room'
 import {useNavigate} from 'react-router-dom'
 
 const RoomsActions = ({params}) => {
@@ -13,6 +13,7 @@ const RoomsActions = ({params}) => {
   } = useValue()
   const navigate = useNavigate()
   const handleEdit = () => {
+    clearRoom(dispatch)
     dispatch({type: 'UPDATE_LOCATION', payload: {lng, lat}})
     dispatch({type: 'UPDATE_DETAILS', payload: {price, title, description}})
     dispatch({type: 'UPDATE_IMAGES', payload: images})

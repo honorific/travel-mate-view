@@ -13,14 +13,17 @@ import AddLocation from './addLocation/AddLocation'
 import AddImages from './addImages/AddImages'
 import AddDetails from './addDetailes/AddDetails'
 import {useValue} from '../../context/ContextProvider'
-import {Send} from '@mui/icons-material'
-import {createRoom} from '../../actions/room'
+import {Cancel, Send} from '@mui/icons-material'
+import {clearRoom, createRoom, updateRoom} from '../../actions/room'
+import {useNavigate} from 'react-router-dom'
 
 const AddRoom = () => {
   const {
-    state: {images, details, location, currentUser},
+    state: {images, details, location, currentUser, updatedRoom},
     dispatch,
   } = useValue()
+
+  const navigate = useNavigate()
 
   const [showSubmit, setShowSubmit] = useState(false)
   const [activeStep, setActiveStep] = useState(0)
@@ -39,6 +42,7 @@ const AddRoom = () => {
       description: details.description,
       images,
     }
+    if (updatedRoom) return updateRoom(room, currentUser, dispatch, updatedRoom)
     createRoom(room, currentUser, dispatch)
   }
 
@@ -101,6 +105,16 @@ const AddRoom = () => {
     }
   }, [steps])
 
+  const handleCancel = () => {
+    if (updatedRoom) {
+      navigate('/dashboard/rooms')
+      clearRoom(dispatch)
+    } else {
+      dispatch({type: 'UPDATE_SECTION', payload: 0})
+      clearRoom(dispatch)
+    }
+  }
+
   return (
     <Container sx={{my: 4}}>
       <Stepper alternativeLabel nonLinear activeStep={activeStep} sx={{mb: 3}}>
@@ -139,8 +153,9 @@ const AddRoom = () => {
             Next
           </Button>
         </Stack>
-        {showSubmit && (
-          <Stack sx={{alignItems: 'center'}}>
+
+        <Stack sx={{alignItems: 'center', justifyContent: 'center', gap: 2}}>
+          {showSubmit && (
             <Button
               fullWidth
               variant='contained'
@@ -148,10 +163,18 @@ const AddRoom = () => {
               onClick={handleSubmit}
               sx={{mt: 5}}
             >
-              Add room
+              {updatedRoom ? 'Update' : 'submit'}
             </Button>
-          </Stack>
-        )}
+          )}
+          <Button
+            variant='outlined'
+            fullWidth
+            endIcon={<Cancel />}
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+        </Stack>
       </Box>
     </Container>
   )
