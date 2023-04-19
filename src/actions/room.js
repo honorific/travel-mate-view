@@ -22,7 +22,7 @@ export const createRoom = async (room, currentUser, dispatch) => {
         message: 'the room created successfully',
       },
     })
-    dispatch({type: 'RESET_ROOM'})
+    clearRoom(dispatch)
     dispatch({type: 'UPDATE_SECTION', payload: 0})
     dispatch({type: 'UPDATE_ROOM', payload: result})
   }
@@ -81,9 +81,19 @@ export const updateRoom = async (room, currentUser, dispatch, updatedRoom) => {
         message: 'the room has been updated successfully',
       },
     })
-    dispatch({type: 'RESET_ROOM'})
+    clearRoom(dispatch)
     dispatch({type: 'UPDATE_SECTION', payload: 0})
     dispatch({type: 'UPDATE_ROOM', payload: result})
   }
   dispatch({type: 'END_LOADING'})
+}
+
+export const clearRoom = (
+  dispatch,
+  currentUser,
+  images = [],
+  updatedRoom = null,
+) => {
+  dispatch({type: 'RESET_ROOM'})
+  //emove from local storage
 }

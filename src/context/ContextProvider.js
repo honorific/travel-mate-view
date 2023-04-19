@@ -14,6 +14,8 @@ const initialState = {
   details: {title: '', description: '', price: 0},
   location: {lng: 0, lat: 0},
   updatedRoom: null,
+  deletedImages: [],
+  addedImages: [],
   rooms: [],
   priceFilter: 50,
   adddressFilter: null,

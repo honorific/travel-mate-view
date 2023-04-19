@@ -14,13 +14,16 @@ import AddImages from './addImages/AddImages'
 import AddDetails from './addDetailes/AddDetails'
 import {useValue} from '../../context/ContextProvider'
 import {Cancel, Send} from '@mui/icons-material'
-import {createRoom, updateRoom} from '../../actions/room'
+import {clearRoom, createRoom, updateRoom} from '../../actions/room'
+import {useNavigate} from 'react-router-dom'
 
 const AddRoom = () => {
   const {
     state: {images, details, location, currentUser, updatedRoom},
     dispatch,
   } = useValue()
+
+  const navigate = useNavigate()
 
   const [showSubmit, setShowSubmit] = useState(false)
   const [activeStep, setActiveStep] = useState(0)
@@ -102,7 +105,15 @@ const AddRoom = () => {
     }
   }, [steps])
 
-  const handleCancel = () => {}
+  const handleCancel = () => {
+    if (updatedRoom) {
+      navigate('/dashboard/rooms')
+      clearRoom(dispatch)
+    } else {
+      dispatch({type: 'UPDATE_SECTION', payload: 0})
+      clearRoom(dispatch)
+    }
+  }
 
   return (
     <Container sx={{my: 4}}>
