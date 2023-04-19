@@ -32,6 +32,8 @@ import Users from './users/Users'
 import Main from './main/Main'
 import Requests from './requests/Requests'
 import Messages from '../messages/Messages'
+import {storeRoom} from '../../actions/room'
+import {logOut} from '../../actions/user'
 
 const drawerWidth = 240
 
@@ -129,7 +131,16 @@ const SideList = ({open, setOpen}) => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    dispatch({type: 'UPDATE_USER', payload: null})
+    storeRoom(
+      location,
+      details,
+      images,
+      updatedRoom,
+      deletedImages,
+      addedImages,
+      currentUser.id,
+    )
+    logOut(dispatch)
     navigate('/')
   }
   return (
