@@ -39,7 +39,7 @@ const AddLocation = () => {
   }, [])
 
   useEffect(() => {
-    if (lng || (lat && mapref.current)) {
+    if ((lng || lat) && mapref.current) {
       mapref.current.flyTo({
         center: [lng, lat],
       })
