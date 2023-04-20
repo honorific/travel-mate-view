@@ -1,6 +1,12 @@
-import {createContext, useContext, useEffect, useMemo, useReducer} from 'react'
+import {
+  useRef,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+} from 'react'
 import reducer from './Reducer'
-import {useRef, useEffect} from 'react'
 import {getUserInfo, removeUserInfo} from '../utils/auth'
 
 const initialState = {
