@@ -22,7 +22,7 @@ export const createRoom = async (room, currentUser, dispatch) => {
         message: 'the room created successfully',
       },
     })
-    clearRoom(dispatch)
+    clearRoom(dispatch, currentUser)
     dispatch({type: 'UPDATE_SECTION', payload: 0})
     dispatch({type: 'UPDATE_ROOM', payload: result})
   }
@@ -61,7 +61,13 @@ export const deleteRoom = async (room, currentUser, dispatch) => {
   dispatch({type: 'END_LOADING'})
 }
 
-export const updateRoom = async (room, currentUser, dispatch, updatedRoom) => {
+export const updateRoom = async (
+  room,
+  currentUser,
+  dispatch,
+  updatedRoom,
+  deletedImages,
+) => {
   dispatch({type: 'START_LOADING'})
   const result = await fetchData(
     {
@@ -81,7 +87,7 @@ export const updateRoom = async (room, currentUser, dispatch, updatedRoom) => {
         message: 'the room has been updated successfully',
       },
     })
-    clearRoom(dispatch)
+    clearRoom(dispatch, currentUser, deletedImages, updatedRoom)
     dispatch({type: 'UPDATE_SECTION', payload: 0})
     dispatch({type: 'UPDATE_ROOM', payload: result})
   }
@@ -96,4 +102,43 @@ export const clearRoom = (
 ) => {
   dispatch({type: 'RESET_ROOM'})
   //emove from local storage
+  if (updatedRoom) {
+    deleteImages(images, updateRoom.uid)
+  } else {
+    deleteImages(images, currentUser.id)
+  }
+}
+
+export const storeRoom = (
+  location,
+  detailes,
+  images,
+  updatedRoom,
+  deletedImages,
+  addedImages,
+  userId,
+) => {
+  if (
+    location.lng ||
+    location.lat ||
+    detailes.price ||
+    detailes.title ||
+    detailes.description ||
+    images.length
+  ) {
+    localStorage.setItem(
+      userId,
+      JSON.stringify({
+        location,
+        detailes,
+        images,
+        updatedRoom,
+        deletedImages,
+        addedImages,
+      }),
+    )
+    return true
+  } else {
+    return false
+  }
 }

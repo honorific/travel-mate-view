@@ -19,7 +19,15 @@ import {useNavigate} from 'react-router-dom'
 
 const AddRoom = () => {
   const {
-    state: {images, details, location, currentUser, updatedRoom},
+    state: {
+      images,
+      details,
+      location,
+      currentUser,
+      updatedRoom,
+      deletedImages,
+      addedImages,
+    },
     dispatch,
   } = useValue()
 
@@ -42,7 +50,8 @@ const AddRoom = () => {
       description: details.description,
       images,
     }
-    if (updatedRoom) return updateRoom(room, currentUser, dispatch, updatedRoom)
+    if (updatedRoom)
+      return updateRoom(room, currentUser, dispatch, updatedRoom, deletedImages)
     createRoom(room, currentUser, dispatch)
   }
 
@@ -108,10 +117,10 @@ const AddRoom = () => {
   const handleCancel = () => {
     if (updatedRoom) {
       navigate('/dashboard/rooms')
-      clearRoom(dispatch)
+      clearRoom(dispatch, currentUser, addedImages, updatedRoom)
     } else {
       dispatch({type: 'UPDATE_SECTION', payload: 0})
-      clearRoom(dispatch)
+      clearRoom(dispatch, currentUser, images)
     }
   }
 
