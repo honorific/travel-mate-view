@@ -13,6 +13,7 @@ const AddLocation = () => {
   const {
     state: {
       location: {lng, lat},
+      currentUser,
     },
     dispatch,
   } = useValue()
@@ -20,15 +21,15 @@ const AddLocation = () => {
   const mapref = useRef()
 
   useEffect(() => {
-    if (!lng && !lat) {
+    const storedLocation = JSON.parse(
+      localStorage.getItem(currentUser.id),
+    )?.location
+    if (!lng && !lat && !storedLocation?.lng && !storedLocation?.lat) {
       fetch('https://ipapi.co/json')
         .then((rawResponse) => {
           return rawResponse.json()
         })
         .then((data) => {
-          mapref.current.flyTo({
-            center: [data.longitude, data.latitude],
-          })
           dispatch({
             type: 'UPDATE_LOCATION',
             payload: {lng: data.longitude, lat: data.latitude},
@@ -36,6 +37,14 @@ const AddLocation = () => {
         })
     }
   }, [])
+
+  useEffect(() => {
+    if (lng || (lat && mapref.current)) {
+      mapref.current.flyTo({
+        center: [lng, lat],
+      })
+    }
+  }, [lng, lat])
 
   return (
     <Box sx={{height: 400, position: 'relative'}}>
@@ -65,7 +74,7 @@ const AddLocation = () => {
           position='top-left'
           trackUserLocation
           onGeolocate={(e) => {
-            console.log("geo locate e: ",e)
+            console.log('geo locate e: ', e)
             dispatch({
               type: 'UPDATE_LOCATION',
               payload: {lng: e.coords.longitude, lat: e.coords.latitude},
