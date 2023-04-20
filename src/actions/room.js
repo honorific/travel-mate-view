@@ -128,14 +128,14 @@ export const storeRoom = (
   ) {
     localStorage.setItem(
       userId,
-      JSON.stringify(
+      JSON.stringify({
         location,
         detailes,
         images,
         updatedRoom,
         deletedImages,
         addedImages,
-      ),
+      }),
     )
     return true
   } else {
