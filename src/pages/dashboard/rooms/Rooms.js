@@ -5,10 +5,11 @@ import {useValue} from '../../../context/ContextProvider'
 import {getRooms} from '../../../actions/room'
 import {grey} from '@mui/material/colors'
 import RoomsActions from './RoomsActions'
+import isAdmin from '../utils/isAdmin'
 
 const Rooms = ({setSelectedLink, link}) => {
   const {
-    state: {rooms},
+    state: {rooms, currentUser},
     dispatch,
   } = useValue()
 
@@ -107,7 +108,11 @@ const Rooms = ({setSelectedLink, link}) => {
       </Typography>
       <DataGrid
         columns={columns}
-        rows={rooms}
+        rows={
+          isAdmin(currentUser)
+            ? rooms
+            : rooms.filter((room) => room.uid === currentUser.id)
+        }
         initialState={{
           pagination: {paginationModel: {pageSize: 5}},
         }}

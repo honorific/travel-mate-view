@@ -120,26 +120,25 @@ const SideList = ({open, setOpen}) => {
               component: <Users {...{setSelectedLink, link: 'users'}} />,
             },
           ]
-        : [],
-            {
-              title: 'Rooms',
-              icon: <KingBed />,
-              link: 'rooms',
-              component: <Rooms {...{setSelectedLink, link: 'rooms'}} />,
-            },
-            {
-              title: 'Requests',
-              icon: <NotificationsActive />,
-              link: 'requests',
-              component: <Requests {...{setSelectedLink, link: 'requests'}} />,
-            },
-            {
-              title: 'Messages',
-              icon: <MarkChatUnread />,
-              link: 'messages',
-              component: <Messages {...{setSelectedLink, link: 'messages'}} />,
-            },
-          ),
+        : []),
+      {
+        title: 'Rooms',
+        icon: <KingBed />,
+        link: 'rooms',
+        component: <Rooms {...{setSelectedLink, link: 'rooms'}} />,
+      },
+      {
+        title: 'Requests',
+        icon: <NotificationsActive />,
+        link: 'requests',
+        component: <Requests {...{setSelectedLink, link: 'requests'}} />,
+      },
+      {
+        title: 'Messages',
+        icon: <MarkChatUnread />,
+        link: 'messages',
+        component: <Messages {...{setSelectedLink, link: 'messages'}} />,
+      },
     ],
     [],
   )
