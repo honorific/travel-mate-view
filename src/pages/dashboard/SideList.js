@@ -34,6 +34,7 @@ import Requests from './requests/Requests'
 import Messages from '../messages/Messages'
 import {storeRoom} from '../../actions/room'
 import {logOut} from '../../actions/user'
+import useCheckToken from '../../hooks/useCheckToken'
 
 const drawerWidth = 240
 
@@ -85,6 +86,7 @@ const Drawer = styled(MuiDrawer, {
 }))
 
 const SideList = ({open, setOpen}) => {
+  useCheckToken()
   const {
     state: {
       location,
@@ -149,7 +151,6 @@ const SideList = ({open, setOpen}) => {
       currentUser.id,
     )
     logOut(dispatch)
-    navigate('/')
   }
   return (
     <>
