@@ -38,14 +38,14 @@ const Users = ({setSelectedLink, link}) => {
         width: 100,
         type: 'singleSelect',
         valueOptions: ['basic', 'editor', 'admin'],
-        editable: true,
+        editable: currentUser?.role === 'admin',
       },
       {
         field: 'active',
         headerName: 'Active',
         width: 100,
         type: 'boolean',
-        editable: true,
+        editable: currentUser?.role === 'admin',
       },
       {
         field: 'createdAt',
