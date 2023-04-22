@@ -11,6 +11,8 @@ import SideList from './SideList'
 import {Tooltip} from '@mui/material'
 import {Brightness4, Brightness7, Home as HomeIcon} from '@mui/icons-material'
 import {useNavigate} from 'react-router-dom'
+import Protected from '../../components/protected/Protected'
+import Login from '../../components/user/Login'
 
 const drawerWidth = 240
 
@@ -83,8 +85,11 @@ const Dashboard = () => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <SideList {...{open, setOpen}} />
+        <Protected>
+          <SideList {...{open, setOpen}} />
+        </Protected>
       </Box>
+      <Login />
     </ThemeProvider>
   )
 }

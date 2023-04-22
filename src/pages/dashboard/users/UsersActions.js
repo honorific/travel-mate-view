@@ -6,7 +6,10 @@ import {updateStatus} from '../../../actions/user'
 import {useValue} from '../../../context/ContextProvider'
 
 const UsersActions = ({params, rowId, setRowId}) => {
-  const {dispatch} = useValue()
+  const {
+    dispatch,
+    state: {currentUser},
+  } = useValue()
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [disabled, setDisabled] = useState(true)
@@ -32,7 +35,12 @@ const UsersActions = ({params, rowId, setRowId}) => {
       for (let i = 0; i < rowId.length; i++) {
         if (rowId[i] == params.id) {
           const {role, active, _id} = params.row
-          const result = await updateStatus({role, active}, _id, dispatch)
+          const result = await updateStatus(
+            {role, active},
+            _id,
+            dispatch,
+            currentUser,
+          )
           if (result) {
             setSuccess(true)
             setRowId(rowId.filter((row) => row !== params.id))
