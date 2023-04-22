@@ -19,12 +19,12 @@ import AreaRoomsUsers from './AreaRoomsUsers'
 
 function Main({setSelectedLink, link}) {
   const {
-    state: {users, rooms},
+    state: {users, rooms, currentUser},
     dispatch,
   } = useValue()
   useEffect(() => {
     setSelectedLink(link)
-    if (users.length === 0) getUsers(dispatch)
+    if (users.length === 0) getUsers(dispatch, currentUser)
     if (rooms.length === 0) getRooms(dispatch)
   }, [])
 

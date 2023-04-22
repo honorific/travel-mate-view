@@ -101,7 +101,7 @@ export const clearRoom = (
   updatedRoom = null,
 ) => {
   dispatch({type: 'RESET_ROOM'})
-  //emove from local storage
+  localStorage.removeItem(currentUser.id)
   if (updatedRoom) {
     deleteImages(images, updateRoom.uid)
   } else {

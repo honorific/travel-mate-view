@@ -1,9 +1,10 @@
 import {v4 as uuidv4} from 'uuid'
 import uploadFile from '../firebase/uploadFile'
 import fetchData from '../utils/fetchData'
+import {useValue} from '../context/ContextProvider'
 
 const url = `${process.env.REACT_APP_SERVER_URL}/user`
-
+//const {state: currentUser} = useValue()
 export const register = async (user, dispatch) => {
   dispatch({type: 'START_LOADING'})
   const result = await fetchData({url: `${url}/register`, body: user}, dispatch)
@@ -90,18 +91,22 @@ export const updateProfile = async (currentUser, updatedFields, dispatch) => {
   dispatch({type: 'END_LOADING'})
 }
 
-export const getUsers = async (dispatch) => {
-  const result = await fetchData({url, method: 'GET'}, dispatch)
+export const getUsers = async (dispatch, currentUser) => {
+  const result = await fetchData(
+    {url, method: 'GET', token: currentUser.token},
+    dispatch,
+  )
   if (result) {
     dispatch({type: 'UPDATE_USERS', payload: result})
   }
 }
 
-export const updateStatus = (updatedFields, userId, dispatch) => {
+export const updateStatus = (updatedFields, userId, dispatch, currentUser) => {
   return fetchData(
     {
       url: `${url}/updateStatus/${userId}`,
       method: 'PATCH',
+      token: currentUser.token,
       body: updatedFields,
     },
     dispatch,
@@ -111,4 +116,5 @@ export const updateStatus = (updatedFields, userId, dispatch) => {
 export const logOut = (dispatch) => {
   dispatch({type: 'UPDATE_USER', payload: null})
   dispatch({type: 'RESET_ROOM'})
+  dispatch({type: 'UPDATE_USERS', payload: []})
 }

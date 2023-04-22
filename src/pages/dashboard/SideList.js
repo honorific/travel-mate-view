@@ -34,6 +34,8 @@ import Requests from './requests/Requests'
 import Messages from '../messages/Messages'
 import {storeRoom} from '../../actions/room'
 import {logOut} from '../../actions/user'
+import useCheckToken from '../../hooks/useCheckToken'
+import isAdmin from './utils/isAdmin'
 
 const drawerWidth = 240
 
@@ -85,6 +87,7 @@ const Drawer = styled(MuiDrawer, {
 }))
 
 const SideList = ({open, setOpen}) => {
+  useCheckToken()
   const {
     state: {
       location,
@@ -102,18 +105,22 @@ const SideList = ({open, setOpen}) => {
 
   const list = useMemo(
     () => [
-      {
-        title: 'Main',
-        icon: <Dashboard />,
-        link: '',
-        component: <Main {...{setSelectedLink, link: ''}} />,
-      },
-      {
-        title: 'Users',
-        icon: <PeopleAlt />,
-        link: 'users',
-        component: <Users {...{setSelectedLink, link: 'users'}} />,
-      },
+      ...(isAdmin(currentUser)
+        ? [
+            {
+              title: 'Main',
+              icon: <Dashboard />,
+              link: '',
+              component: <Main {...{setSelectedLink, link: ''}} />,
+            },
+            {
+              title: 'Users',
+              icon: <PeopleAlt />,
+              link: 'users',
+              component: <Users {...{setSelectedLink, link: 'users'}} />,
+            },
+          ]
+        : []),
       {
         title: 'Rooms',
         icon: <KingBed />,
@@ -149,7 +156,6 @@ const SideList = ({open, setOpen}) => {
       currentUser.id,
     )
     logOut(dispatch)
-    navigate('/')
   }
   return (
     <>
@@ -238,6 +244,16 @@ const SideList = ({open, setOpen}) => {
               element={item.component}
             ></Route>
           ))}
+          <Route
+            path='*'
+            element={
+              isAdmin(currentUser) ? (
+                <Main {...{setSelectedLink, link: ''}} />
+              ) : (
+                <Rooms {...{setSelectedLink, link: 'rooms'}} />
+              )
+            }
+          />
         </Routes>
       </Box>
     </>
