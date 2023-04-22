@@ -2,7 +2,7 @@ import {Check, Save} from '@mui/icons-material'
 import {Box, CircularProgress, Fab} from '@mui/material'
 import {green} from '@mui/material/colors'
 import React, {useEffect, useState} from 'react'
-import {updateStatus} from '../../../actions/user'
+import {getUsers, updateStatus} from '../../../actions/user'
 import {useValue} from '../../../context/ContextProvider'
 
 const UsersActions = ({params, rowId, setRowId}) => {
@@ -44,6 +44,7 @@ const UsersActions = ({params, rowId, setRowId}) => {
           if (result) {
             setSuccess(true)
             setRowId(rowId.filter((row) => row !== params.id))
+            getUsers(dispatch, currentUser)
           }
           setLoading(false)
         }
