@@ -1,9 +1,10 @@
 import {v4 as uuidv4} from 'uuid'
 import uploadFile from '../firebase/uploadFile'
 import fetchData from '../utils/fetchData'
+import {useValue} from '../context/ContextProvider'
 
 const url = `${process.env.REACT_APP_SERVER_URL}/user`
-
+//const {state: currentUser} = useValue()
 export const register = async (user, dispatch) => {
   dispatch({type: 'START_LOADING'})
   const result = await fetchData({url: `${url}/register`, body: user}, dispatch)
@@ -100,7 +101,7 @@ export const getUsers = async (dispatch, currentUser) => {
   }
 }
 
-export const updateStatus = (updatedFields, userId, dispatch) => {
+export const updateStatus = (updatedFields, userId, dispatch, currentUser) => {
   return fetchData(
     {
       url: `${url}/updateStatus/${userId}`,

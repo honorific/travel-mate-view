@@ -35,6 +35,7 @@ import Messages from '../messages/Messages'
 import {storeRoom} from '../../actions/room'
 import {logOut} from '../../actions/user'
 import useCheckToken from '../../hooks/useCheckToken'
+import isAdmin from './utils/isAdmin'
 
 const drawerWidth = 240
 
@@ -104,36 +105,41 @@ const SideList = ({open, setOpen}) => {
 
   const list = useMemo(
     () => [
-      {
-        title: 'Main',
-        icon: <Dashboard />,
-        link: '',
-        component: <Main {...{setSelectedLink, link: ''}} />,
-      },
-      {
-        title: 'Users',
-        icon: <PeopleAlt />,
-        link: 'users',
-        component: <Users {...{setSelectedLink, link: 'users'}} />,
-      },
-      {
-        title: 'Rooms',
-        icon: <KingBed />,
-        link: 'rooms',
-        component: <Rooms {...{setSelectedLink, link: 'rooms'}} />,
-      },
-      {
-        title: 'Requests',
-        icon: <NotificationsActive />,
-        link: 'requests',
-        component: <Requests {...{setSelectedLink, link: 'requests'}} />,
-      },
-      {
-        title: 'Messages',
-        icon: <MarkChatUnread />,
-        link: 'messages',
-        component: <Messages {...{setSelectedLink, link: 'messages'}} />,
-      },
+      ...(isAdmin(currentUser)
+        ? [
+            {
+              title: 'Main',
+              icon: <Dashboard />,
+              link: '',
+              component: <Main {...{setSelectedLink, link: ''}} />,
+            },
+            {
+              title: 'Users',
+              icon: <PeopleAlt />,
+              link: 'users',
+              component: <Users {...{setSelectedLink, link: 'users'}} />,
+            },
+          ]
+        : [],
+            {
+              title: 'Rooms',
+              icon: <KingBed />,
+              link: 'rooms',
+              component: <Rooms {...{setSelectedLink, link: 'rooms'}} />,
+            },
+            {
+              title: 'Requests',
+              icon: <NotificationsActive />,
+              link: 'requests',
+              component: <Requests {...{setSelectedLink, link: 'requests'}} />,
+            },
+            {
+              title: 'Messages',
+              icon: <MarkChatUnread />,
+              link: 'messages',
+              component: <Messages {...{setSelectedLink, link: 'messages'}} />,
+            },
+          ),
     ],
     [],
   )
@@ -239,6 +245,16 @@ const SideList = ({open, setOpen}) => {
               element={item.component}
             ></Route>
           ))}
+          <Route
+            path='*'
+            element={
+              isAdmin(currentUser) ? (
+                <Main {...{setSelectedLink, link: ''}} />
+              ) : (
+                <Rooms {...{setSelectedLink, link: 'rooms'}} />
+              )
+            }
+          />
         </Routes>
       </Box>
     </>
